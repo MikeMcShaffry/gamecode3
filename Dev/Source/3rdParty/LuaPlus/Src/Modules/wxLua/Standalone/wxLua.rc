@@ -1,0 +1,15 @@
+/////////////////////////////////////////////////////////////////////////////
+// Purpose:     Resources for wxLuaStandalone
+// Author:      J Winwood
+// Created:     04/11/2001
+// RCS-ID:      $Id: wxLua.rc,v 1.1 2003/08/27 01:27:01 john Exp $
+// Copyright:   (c) 2001-2002 Lomtick Software. All rights reserved.
+// Licence:     wxWindows licence
+/////////////////////////////////////////////////////////////////////////////
+
+lua   ICON   "wxLua.ico"
+logo  BITMAP "..\examples\bitmaps\wxLua.bmp"
+
+#include "wx/msw/wx.rc"
+
+// 1     24     "wxLua.manifest" // looks horrible!

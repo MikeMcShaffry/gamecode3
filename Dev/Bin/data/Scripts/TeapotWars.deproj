@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <file>
+    <filename>testLevel.lua</filename>
+  </file>
+  <file>
+    <filename>init.lua</filename>
+  </file>
+  <file>
+    <filename>startup.lua</filename>
+    <breakpoint>
+      <line>1</line>
+    </breakpoint>
+    <breakpoint>
+      <line>120</line>
+    </breakpoint>
+  </file>
+</project>

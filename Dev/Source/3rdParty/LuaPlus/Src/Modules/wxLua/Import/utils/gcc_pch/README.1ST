@@ -1,0 +1,20 @@
+gcc_pch contains some half written files to use the gcc precompilier
+to try to extract useful information from header files.
+
+To use this stuff:
+
+edit wx_incl.h to suit you, these are the files that will be
+included and precompiled together along with anything that
+the header include themselves.
+
+Run gcc_header to create a file called wxWinInc.pch
+> gcc_header wx_incl.h wxWinInc.pch
+
+Edit the top gcc_header.lua to specify the correct files
+add paths that you care about. This program will strip out
+all the includes not in the variable includepaths and trim
+excess whitespace. It really doesn't do too much.
+
+> lua gcc_header.lua > Outputfilename
+
+With all the defines gone, it's not very useful

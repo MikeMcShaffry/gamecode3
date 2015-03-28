@@ -1,0 +1,29 @@
+
+rule ConsoleIffApp
+  {
+    Application $(<) : $(>) : noinstall console nomanifest ;
+    LinkWith $(<) : iff ;
+   LibDepends iffCheck : iff ;
+    CFlags $(<) :
+          [ FIncludes $(TOP)/Extras/iff ]
+           ;
+    MsvcIncDirs $(<) :
+        "../../Extras/iff" ;
+  }
+
+
+SubDir TOP Extras iff ;
+
+Description iff : "Interchange File Format EA-IFF-85" ;
+
+Library iff : [ Wildcard .  : */.h *.cpp ] : noinstall ;
+CFlags iff : [ FIncludes $(TOP)/Extras/iff ] ;
+LibDepends iff : ;
+
+   MsvcIncDirs iff : 
+	"../../Extras/iff" ;
+
+InstallHeader [ Wildcard *.h ] : iff ;
+
+SubInclude TOP Extras iff iffCheck ;
+

@@ -1,0 +1,17 @@
+This is a method to extract information from a ctags "tags" file.
+
+Edit the "get_tags" file to your liking. The -R is supposed to recurse,
+unfortunately it doesn't, so I append the sub dirs. You now have a file called
+"tags."
+
+>get_tags
+
+Edit the top of "ParseTheTags.lua" to your liking. The "basePath" variable will
+be stripped from the ctags header filename. The files that are part of excludeList
+are not processed at all.
+
+>lua ParseTheTags.lua > OutputFilename
+
+You now have a file that looks close to the original headers, w/o comments, private,
+protected members and what not.
+

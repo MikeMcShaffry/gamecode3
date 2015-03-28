@@ -1,0 +1,193 @@
+<?xml version="1.0" ?>
+<resource>
+	<object class="wxDialog" name="dialog1">
+				<pos>10,10d</pos>
+				<size>67,106d</size>
+				<style>wxRAISED_BORDER|wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxTHICK_FRAME|wxRESIZE_BORDER|wxSYSTEM_MENU</style>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<title>Calc</title>
+			<object class="wxButton" name="button0">
+				<pos>4,91d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>0</label>
+			</object>
+			<object class="wxButton" name="button1">
+				<pos>4,75d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>1</label>
+			</object>
+			<object class="wxButton" name="button2">
+				<pos>20,75d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>2</label>
+			</object>
+			<object class="wxButton" name="button3">
+				<pos>36,75d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>3</label>
+			</object>
+			<object class="wxButton" name="button4">
+				<pos>4,59d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>4</label>
+			</object>
+			<object class="wxButton" name="button5">
+				<pos>20,59d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>5</label>
+			</object>
+			<object class="wxButton" name="button6">
+				<pos>36,59d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>6</label>
+			</object>
+			<object class="wxButton" name="button7">
+				<pos>4,43d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>7</label>
+			</object>
+			<object class="wxButton" name="button8">
+				<pos>20,43d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>8</label>
+			</object>
+			<object class="wxButton" name="button9">
+				<pos>36,43d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>9</label>
+			</object>
+			<object class="wxButton" name="button_decimal">
+				<pos>20,91d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>.</label>
+			</object>
+			<object class="wxButton" name="button_equals">
+				<pos>36,91d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>=</label>
+			</object>
+			<object class="wxButton" name="button_divide">
+				<pos>52,43d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>/</label>
+			</object>
+			<object class="wxButton" name="button_multiply">
+				<pos>52,59d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>x</label>
+			</object>
+			<object class="wxButton" name="button_minus">
+				<pos>52,75d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>-</label>
+			</object>
+			<object class="wxButton" name="button_plus">
+				<pos>52,91d</pos>
+				<size>12,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>+</label>
+			</object>
+			<object class="wxButton" name="button_clear">
+				<pos>4,28d</pos>
+				<size>29,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>C</label>
+			</object>
+			<object class="wxButton" name="button_off">
+				<pos>36,28d</pos>
+				<size>28,12d</size>
+			<font>
+				<size>8</size>
+				<face>swiss</face>
+			</font>
+				<label>OFF</label>
+			</object>
+			<object class="wxStaticText" name="statictext1">
+				<pos>4,9d</pos>
+				<size>56,16d</size>
+			<font>
+				<size>10</size>
+				<face>swiss</face>
+			</font>
+				<label>0</label>
+			</object>
+			<object class="wxStaticBox" name="staticbox1">
+				<pos>2,2d</pos>
+				<size>64,18d</size>
+			<font>
+				<size>10</size>
+				<face>swiss</face>
+			</font>
+				<label></label>
+			</object>
+	</object>
+</resource>

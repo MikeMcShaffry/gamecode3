@@ -1,0 +1,143 @@
+README.1ST - wrappers for wxLua
+
+The wrappers for wxLua provide information for lua to interface with
+the wxWindows C++ API. The wrapper files are a skeleton that the program
+wxLuaWrap.lua parses and turns into C functions that imported into lua.
+
+------------------------------------------------------------------------------
+WRAPPER FILES
+------------------------------------------------------------------------------
+
+luasetup.h contains all wxLUA_USE_wxXXX
+    if wxLUA_USE_XXX is 1 then it's included else ignored
+    when generating wxLuaWrapGTK[MSW].hpp
+    you can regenerate it (in unix) by running util/get_luasetup
+    Class depend on each other like in C++, you get warnings for
+    missing base classes, for functions that take missing classes
+    as input or output them, you'll get a compile error. You can
+    edit the appropriate .i file and rem "//" out the line. 
+
+*.i are the wrapper files broken up by functionality
+
+wxLuaWrap.i is the base wrapper file that includes the others
+
+Overrides.hpp contains functions that cannot be automatically wrapped
+
+wxLuaWrap.lua reads wxLuaWrap.i and Overrides.hpp to generate
+    wxLuaWrapGTK[MSW].hpp which is used internally in
+    Library/wxLuaInternals.cpp
+
+    wxLuaWrap.lua takes these parameters
+    lua wxLuaWrap.lua -e"isWindows=1; inputPath=\"somepath/\"; outputPath=\"path/\"; luasetup=\"luasetup.h\""
+      isWindows means, you guessed it, you want to create wxLuaWrapWin.hpp not ...GTK.hpp
+      inputPath specifies the path where the .i files are (note trailing /)
+      outputPath specified where the wxLuaWrapWin[GTK].hpp file goes (note trailing /)
+      luasetup specifies the setup file to use
+
+The wrapper files are very much a work in progress. They have been divided in
+what I think is a reasonable way. There may be some problems with them that will 
+arise when you start to try to exclude different classes. Perhaps I put a define 
+in one class, but it's also used in another?
+
+Another thing that could be tried is to put #if wxLUA_USE_XXX right in the 
+wxLuaWrapGTK.hpp file and so the wrappers are only generated once. The C++ compilier
+will do the job of excluding different components. This has the advantage that
+the wxLUA_USE can be set using other defined symbols, like __WXGTK__, wxUSE_CHECKBOX
+and what not. 
+      
+------------------------------------------------------------------------------
+WRAPPER CONSTRUCTS
+------------------------------------------------------------------------------
+
+%if wxLUA_USE_XXX
+    All code is ignored if wxLUA_USE_XXX is 0
+    set the values of wxLUA_USE_XXX in luasetup.h
+%endif wxLUA_USE_XXX
+
+%win - the next item will be skipped if not isWindows
+%gtk - the next item will be skipped if isWindows
+
+%embedded - the next item is skipped if isEmbedded
+%standalone - the next item is skipped if not isEmbedded
+
+%skip - the next item is skipped, either a single item or a whole class
+
+%stop - immediately stop processing wrapper files
+
+%override ... %end - replace code wrapper code with this handwritten code
+
+%includefile - include another *.i wrapper file to read
+
+%builtin - this is a global function
+
+%constructor - this is an alternate name for a constuctor
+    note: it does seem possible to read the items off the stack
+        and by determining their type choose the appropriate constuctor.
+
+%rename NEW_NAME void DoStuff() - rename a method to a new name
+    wxLua knows the function as void NEW_NAME() though it's accessed
+    in C using DoStuff
+
+%alias - reference a class by another name (currently unused)
+
+%property - not really sure?
+
+%enum [SomeEnum_Type] or [SomeBaseClass::SomeEnum_Type]
+   enum_item1
+   enum_item2
+%end
+    This adds items to a global list of enums, you may have more than
+    one of the same enum. The "SomeEnum_Type" is stripped off so that
+    in wxLua you get the value of the enum with "wx.enum_item1". If 
+    a base class is necessary use "%enum SomeBaseClass::SomeEnum_Type"
+    you still get the value in wxLua using "wx.enum_item1". 
+    Is this Ok? There doesn't seem to be any conflicts yet.
+
+%define SOME_NUMBER - adds SOME_NUMBER to a global list as a number
+
+%define %string SOME_STRING 
+    adds SOME_STRING to a global list as a string
+    SOME_STRING must be defined as const wxChar * SOME_STRING = _("str") or wxT("str")
+    or some way to allow it to be converted easily to const wxChar *
+    in unicode or not, wxWindows does this and it's good practice
+    why not use the original wxString value?
+    You can't get the data from a wxString if you need to convert from unicode
+    VC has problems having a wxString as a member of a struct
+
+%define %object SOME_OBJECT
+    declares a global object, use inside a class so that
+    the object's methods can be known to lua
+
+%define %pointer SOME_POINTER
+    declare a global pointer, use inside a class so that
+    the pointer's methods can be known to lua
+
+%define %event wxEVT_SIZE
+    declare an event type, use inside the wxEvent derived class
+    it corresponds to, so the event's methods can be found
+
+%class SomeClass [, SomeBaseClass]  
+    %define %object wxTheSomeClass <- must go in the class
+    %define %pointer wxTheSomeClassPointer <- must go in the class
+
+    int GetStuff(bool all_of_it) const <- member functions
+    void SetStuff(int stuff)
+    %member int m_x
+%endclass
+    Declare a class and optionally it's base class. All the methods of the
+    base class can be accessed by the class. 
+
+%member - declare a member variable for a class
+    %member int m_x 
+         methods Get_m_x() and Set_m_x(val)
+         properties class.m_x = val and val = class.m_x
+    %rename X %member int m_x
+         methods GetX() and SetX(val)
+         properties class.m_x = val and val = class.m_x
+
+%include "somefile.h" - includes a header file, C code is #include "somefile.h"
+
+%includefile somewrapper.i - includes another wrapper file that is immediately
+    processed, when finished processing continues on the original wrapper
+
+

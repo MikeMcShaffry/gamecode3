@@ -1,0 +1,4220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2K.1beta (1.47)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>LuaCOM User Manual (Version 1.2 RC1)</TITLE>
+<META NAME="description" CONTENT="LuaCOM User Manual (Version 1.2 RC1)">
+<META NAME="keywords" CONTENT="luacom">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2K.1beta">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="luacom00.css">
+
+</HEAD>
+
+<BODY >
+<H1 ALIGN="CENTER">LuaCOM User Manual 
+<BR>
+<FONT SIZE="-1">(Version 1.2 RC1)</FONT></H1>
+<P ALIGN="CENTER"><STRONG>Vinicius Almendra  - Renato Cerqueira</STRONG></P>
+
+<BR>
+
+<H2><A NAME="SECTION00100000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL>
+<LI><A NAME="tex2html202"
+  HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html">1. Introduction</A>
+<UL>
+<LI><A NAME="tex2html203"
+  HREF="#SECTION00210000000000000000">1.1 Features</A>
+<LI><A NAME="tex2html204"
+  HREF="#SECTION00220000000000000000">1.2 Who Should Read What (or About the Manual)</A>
+<LI><A NAME="tex2html205"
+  HREF="#SECTION00230000000000000000">Some information about samples</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html206"
+  HREF="#SECTION00300000000000000000">2. Tutorial</A>
+<UL>
+<LI><A NAME="tex2html207"
+  HREF="#SECTION00310000000000000000">2.1 Using The LuaCOM library</A>
+<LI><A NAME="tex2html208"
+  HREF="#SECTION00320000000000000000">2.2 Locating COM Objects</A>
+<LI><A NAME="tex2html209"
+  HREF="#SECTION00330000000000000000">2.3 Creating Objects</A>
+<LI><A NAME="tex2html210"
+  HREF="#SECTION00340000000000000000">2.4 Getting Help about an Object</A>
+<LI><A NAME="tex2html211"
+  HREF="#SECTION00350000000000000000">2.5 Methods and Properties</A>
+<LI><A NAME="tex2html212"
+  HREF="#SECTION00360000000000000000">2.6 Releasing Objects</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html213"
+  HREF="#SECTION00400000000000000000">3. LuaCOM Elements</A>
+<UL>
+<LI><A NAME="tex2html214"
+  HREF="#SECTION00410000000000000000">3.1 LuaCOM API</A>
+<LI><A NAME="tex2html215"
+  HREF="#SECTION00420000000000000000">3.2 LuaCOM objects</A>
+<UL>
+<LI><A NAME="tex2html216"
+  HREF="#SECTION00421000000000000000">3.2.1 Object Disposal</A>
+</UL>
+<LI><A NAME="tex2html217"
+  HREF="#SECTION00430000000000000000">3.3 Automation binding</A>
+<UL>
+<LI><A NAME="tex2html218"
+  HREF="#SECTION00431000000000000000">3.3.1 Implementing <TT>dispinterfaces</TT> in Lua</A>
+<LI><A NAME="tex2html219"
+  HREF="#SECTION00432000000000000000">3.3.2 Using Methods and Properties</A>
+<LI><A NAME="tex2html220"
+  HREF="#SECTION00433000000000000000">3.3.3 Connection Points: handling events</A>
+<LI><A NAME="tex2html221"
+  HREF="#SECTION00434000000000000000">3.3.4 Parameter Passing</A>
+<LI><A NAME="tex2html222"
+  HREF="#SECTION00435000000000000000">3.3.5 Exception Handling</A>
+</UL>
+<LI><A NAME="tex2html223"
+  HREF="#SECTION00440000000000000000">3.4 Type Conversion</A>
+<UL>
+<LI><A NAME="tex2html224"
+  HREF="#SECTION00441000000000000000">3.4.1 Boolean values</A>
+<LI><A NAME="tex2html225"
+  HREF="#SECTION00442000000000000000">3.4.2 Pointers to <TT>IDispatch</TT> and LuaCOM objects</A>
+<LI><A NAME="tex2html226"
+  HREF="#SECTION00443000000000000000">3.4.3 Pointers to <TT>IUnknown</TT></A>
+<LI><A NAME="tex2html227"
+  HREF="#SECTION00444000000000000000">3.4.4 Arrays and Tables</A>
+<LI><A NAME="tex2html228"
+  HREF="#SECTION00445000000000000000">3.4.5 <TT>CURRENCY</TT> type</A>
+<LI><A NAME="tex2html229"
+  HREF="#SECTION00446000000000000000">3.4.6 <TT>DATE</TT> type</A>
+<LI><A NAME="tex2html230"
+  HREF="#SECTION00447000000000000000">3.4.7 Error Handling</A>
+</UL>
+<LI><A NAME="tex2html231"
+  HREF="#SECTION00450000000000000000">3.5 Other Objects</A>
+<UL>
+<LI><A NAME="tex2html232"
+  HREF="#SECTION00451000000000000000">3.5.1 The Enumerator Object</A>
+<LI><A NAME="tex2html233"
+  HREF="#SECTION00452000000000000000">3.5.2 The Connection Point Container Object</A>
+<LI><A NAME="tex2html234"
+  HREF="#SECTION00453000000000000000">3.5.3 The Typelib and Typeinfo Objects</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html235"
+  HREF="#SECTION00500000000000000000">4. Implementing COM objects in Lua</A>
+<UL>
+<LI><A NAME="tex2html236"
+  HREF="#SECTION00510000000000000000">4.1 Introduction</A>
+<LI><A NAME="tex2html237"
+  HREF="#SECTION00520000000000000000">4.2 Is it really useful?</A>
+<LI><A NAME="tex2html238"
+  HREF="#SECTION00530000000000000000">4.3 Terminology</A>
+<LI><A NAME="tex2html239"
+  HREF="#SECTION00540000000000000000">4.4 Building a LuaCOM COM server</A>
+<UL>
+<LI><A NAME="tex2html240"
+  HREF="#SECTION00541000000000000000">4.4.1 Specify the component</A>
+<LI><A NAME="tex2html241"
+  HREF="#SECTION00542000000000000000">4.4.2 Objects to be exported</A>
+<LI><A NAME="tex2html242"
+  HREF="#SECTION00543000000000000000">4.4.3 Building the type library</A>
+<LI><A NAME="tex2html243"
+  HREF="#SECTION00544000000000000000">4.4.4 Registration Information</A>
+<LI><A NAME="tex2html244"
+  HREF="#SECTION00545000000000000000">4.4.5 Registering the Component Object</A>
+<LI><A NAME="tex2html245"
+  HREF="#SECTION00546000000000000000">4.4.6 Implementing and Exposing the Component</A>
+<LI><A NAME="tex2html246"
+  HREF="#SECTION00547000000000000000">4.4.7 Initialization and Termination</A>
+</UL>
+<LI><A NAME="tex2html247"
+  HREF="#SECTION00550000000000000000">4.5 Running the COM server</A>
+<LI><A NAME="tex2html248"
+  HREF="#SECTION00560000000000000000">4.6 Generating Events</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html249"
+  HREF="#SECTION00600000000000000000">5. Release Information</A>
+<UL>
+<LI><A NAME="tex2html250"
+  HREF="#SECTION00610000000000000000">5.1 Limitations</A>
+<LI><A NAME="tex2html251"
+  HREF="#SECTION00620000000000000000">5.2 Known bugs</A>
+<LI><A NAME="tex2html252"
+  HREF="#SECTION00630000000000000000">5.3 Future Enhancements</A>
+<LI><A NAME="tex2html253"
+  HREF="#SECTION00640000000000000000">5.4 Important issues about LuaCOM</A>
+<UL>
+<LI><A NAME="tex2html254"
+  HREF="#SECTION00641000000000000000">5.4.1 Problems instantiating COM objects</A>
+<LI><A NAME="tex2html255"
+  HREF="#SECTION00642000000000000000">5.4.2 Releasing COM objects from memory</A>
+<LI><A NAME="tex2html256"
+  HREF="#SECTION00643000000000000000">5.4.3 Receiving events</A>
+<LI><A NAME="tex2html257"
+  HREF="#SECTION00644000000000000000">5.4.4 Extensible Interfaces</A>
+<LI><A NAME="tex2html258"
+  HREF="#SECTION00645000000000000000">5.4.5 Visual Basic&#169; issue</A>
+</UL>
+<LI><A NAME="tex2html259"
+  HREF="#SECTION00650000000000000000">5.5 History</A>
+<UL>
+<LI><A NAME="tex2html260"
+  HREF="#SECTION00651000000000000000">Version 1.2</A>
+<LI><A NAME="tex2html261"
+  HREF="#SECTION00652000000000000000">Version 1.1</A>
+<LI><A NAME="tex2html262"
+  HREF="#SECTION00653000000000000000">Version 1.0</A>
+<LI><A NAME="tex2html263"
+  HREF="#SECTION00654000000000000000">Version 0.9.2</A>
+<LI><A NAME="tex2html264"
+  HREF="#SECTION00655000000000000000">Version 0.9.1</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html265"
+  HREF="#SECTION00700000000000000000">6. Reference</A>
+<UL>
+<LI><A NAME="tex2html266"
+  HREF="#SECTION00710000000000000000">6.1 The C/C++ API</A>
+<UL>
+<LI><A NAME="tex2html267"
+  HREF="#SECTION00711000000000000000">luacom_open</A>
+<LI><A NAME="tex2html268"
+  HREF="#SECTION00712000000000000000">luacom_close</A>
+<LI><A NAME="tex2html269"
+  HREF="#SECTION00713000000000000000">luacom_detectAutomation</A>
+<LI><A NAME="tex2html270"
+  HREF="#SECTION00714000000000000000">luacom_IDispatch2LuaCOM</A>
+</UL>
+<LI><A NAME="tex2html271"
+  HREF="#SECTION00720000000000000000">6.2 The Lua Standard API</A>
+<UL>
+<LI><A NAME="tex2html272"
+  HREF="#SECTION00721000000000000000">CreateObject</A>
+<LI><A NAME="tex2html273"
+  HREF="#SECTION00722000000000000000">Connect</A>
+<LI><A NAME="tex2html274"
+  HREF="#SECTION00723000000000000000">ImplInterface</A>
+<LI><A NAME="tex2html275"
+  HREF="#SECTION00724000000000000000">ImplInterfaceFromTypelib</A>
+<LI><A NAME="tex2html276"
+  HREF="#SECTION00725000000000000000">GetObject</A>
+<LI><A NAME="tex2html277"
+  HREF="#SECTION00726000000000000000">NewObject</A>
+<LI><A NAME="tex2html278"
+  HREF="#SECTION00727000000000000000">ExposeObject</A>
+<LI><A NAME="tex2html279"
+  HREF="#SECTION00728000000000000000">RegisterObject</A>
+<LI><A NAME="tex2html280"
+  HREF="#SECTION00729000000000000000">addConnection</A>
+<LI><A NAME="tex2html281"
+  HREF="#SECTION007210000000000000000">releaseConnection</A>
+<LI><A NAME="tex2html282"
+  HREF="#SECTION007211000000000000000">ProgIDfromCLSID</A>
+<LI><A NAME="tex2html283"
+  HREF="#SECTION007212000000000000000">CLSIDfromProgID</A>
+<LI><A NAME="tex2html284"
+  HREF="#SECTION007213000000000000000">ShowHelp</A>
+<LI><A NAME="tex2html285"
+  HREF="#SECTION007214000000000000000">GetIUnknown</A>
+<LI><A NAME="tex2html286"
+  HREF="#SECTION007215000000000000000">isMember</A>
+</UL>
+<LI><A NAME="tex2html287"
+  HREF="#SECTION00730000000000000000">6.3 Lua Extended API</A>
+<UL>
+<LI><A NAME="tex2html288"
+  HREF="#SECTION00731000000000000000">pairs</A>
+<LI><A NAME="tex2html289"
+  HREF="#SECTION00732000000000000000">GetType</A>
+<LI><A NAME="tex2html290"
+  HREF="#SECTION00733000000000000000">CreateLocalObject</A>
+<LI><A NAME="tex2html291"
+  HREF="#SECTION00734000000000000000">CreateInprocObject</A>
+<LI><A NAME="tex2html292"
+  HREF="#SECTION00735000000000000000">LoadConstants</A>
+<LI><A NAME="tex2html293"
+  HREF="#SECTION00736000000000000000">FillTypeInfo</A>
+<LI><A NAME="tex2html294"
+  HREF="#SECTION00737000000000000000">FillTypeLib</A>
+</UL>
+<LI><A NAME="tex2html295"
+  HREF="#SECTION00740000000000000000">6.4 Enumerator Object</A>
+<UL>
+<LI><A NAME="tex2html296"
+  HREF="#SECTION00741000000000000000">Methods</A>
+</UL>
+<LI><A NAME="tex2html297"
+  HREF="#SECTION00750000000000000000">6.5 Type Library Object</A>
+<UL>
+<LI><A NAME="tex2html298"
+  HREF="#SECTION00751000000000000000">Methods</A>
+</UL>
+<LI><A NAME="tex2html299"
+  HREF="#SECTION00760000000000000000">6.6 Type Information Object</A>
+<UL>
+<LI><A NAME="tex2html300"
+  HREF="#SECTION00761000000000000000">Methods</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html301"
+  HREF="#SECTION00800000000000000000">7. Credits</A>
+<LI><A NAME="tex2html302"
+  HREF="#SECTION00900000000000000000">About this document ...</A>
+</UL>
+<!--End of Table of Contents-->
+
+<H1><A NAME="SECTION00200000000000000000">
+1. Introduction</A>
+</H1>
+  LuaCOM is an add-on library to the Lua language that allows Lua
+  programs to use and implement objects that follow Microsoft's
+  <I>Component Object Model</I> (COM) specification <B>and</B> use the
+  Automation technology for property access
+  and method calls.
+
+<H1><A NAME="SECTION00210000000000000000">
+1.1 Features</A>
+</H1>
+
+  Currently, the LuaCOM library supports the following features:
+
+<UL>
+<LI>dynamic instantiation of COM objects registered in the
+    system registry, via the <code>CreateObject</code> method;
+
+</LI>
+<LI>dynamic access to running COM objects via
+    <code>GetObject</code>;
+
+</LI>
+<LI>COM method calls as normal Lua function calls and property
+    accesses as normal table field accesses;
+
+</LI>
+<LI>ability to read type libraries and to generate HTML
+    documentation on-the-fly for COM objects;
+
+</LI>
+<LI>use of COM objects without type information;
+
+</LI>
+<LI>type conversion between OLE Automation types and Lua types;
+
+</LI>
+<LI>object disposal using Lua garbage collection mechanism;
+
+</LI>
+<LI>implementation of COM interfaces and objects using Lua
+    tables;
+
+</LI>
+<LI>use of COM connection point mechanism for bidirectional
+    communication and event handling;
+
+</LI>
+<LI>fully compatible with Lua 5 and with Lua 4;
+
+</LI>
+<LI>log mechanism to ease the debugging of applications.
+
+</LI>
+</UL>
+<H1><A NAME="SECTION00220000000000000000">
+1.2 Who Should Read What (or About the Manual)</A>
+</H1>
+This manual is mostly a reference manual. Here we document the
+behavior of LuaCOM in a variety of situations, some implementation
+decisions that affect the end-user of the library and its
+limitations. When facing some strange behavior in an application built
+using LuaCOM, the first step is to read all the chapter
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#chap:release">5</A>, where the majority of possible problems are
+documented. There can be found references to other sections of the
+manual, where more detailed information is provided.
+
+<H4><A NAME="SECTION00220010000000000000">
+1.2.0.0.1 Newbies</A>
+</H4> For those who are newcomers, we provide a tutorial
+section (chapter <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#cap:tutorial">2</A>) with a step-by-step guide to
+start using LuaCOM. More help and samples can be found in LuaCOM's
+home page. Notice that VBScript code can be easily converted to Lua
+with LuaCOM.
+
+This manual does not provide information for developers who need
+deeper technical information about LuaCOM or who are willing to
+modify it for some reason. For this kind of information, please
+contact the authors.
+
+<H4><A NAME="SECTION00220020000000000000">
+1.2.0.0.2 Knowledge required</A>
+</H4> This manual presumes some knowledge of
+COM and Automation. We don't intend to explain in detail how these
+technologies work or how they can be used to solve particular
+problems. This information can be found easily in the web or in good
+books.
+
+<H1><A NAME="SECTION00230000000000000000">
+Some information about samples</A>
+</H1>
+The sample codes shown in this documentation are all for Lua 5,
+although most of them should also run in Lua 4. Anyway, Lua 4 specific
+samples can be found in the documentation for the previous version of
+LuaCOM.
+
+<H1><A NAME="SECTION00300000000000000000"></A>
+<A NAME="cap:tutorial"></A>
+<BR>
+2. Tutorial
+</H1>
+
+<H1><A NAME="SECTION00310000000000000000">
+2.1 Using The LuaCOM library</A>
+</H1>
+
+  LuaCOM is an add-on to the Lua language. To be used, the binary
+  library of LuaCOM must be linked with the host program, just like
+  the Lua library and other add-ons<A NAME="tex2html1"
+  HREF="#foot56"><SUP>2.1</SUP></A>. There
+  are different version of the LuaCOM binary for the different
+  version of the Lua library, so pay attention to link the right one.
+
+  The next step is to modify the source code of the host program to
+  call LuaCOM's <I>and</I> COM initialization and termination
+  functions, which are part of the C/C++ API. To do so, include the
+  LuaCOM's header -- <code>luacom.h</code> -- and call these functions
+  in the proper order: LuaCOM must be initialize after COM and after
+  Lua; it must be terminated before Lua; COM must be terminated AFTER
+  Lua<A NAME="tex2html2"
+  HREF="#foot58"><SUP>2.2</SUP></A>. Here is an example of a simple <TT>C</TT> host program
+  program using LuaCOM.
+
+<FONT SIZE="-1">
+</FONT><PRE>
+   /*
+    * Sample C program using luacom
+    */
+   #include &lt;stdio.h&gt;
+   #include &lt;ole2.h&gt; // needed for CoInitialize and CoUninitialize
+   #include &lt;lua.h&gt;
+
+   #include "luacom.h"
+
+   int main (int argc, char *argv[]) {
+
+     /* COM initialization */
+     CoInitialize(NULL);
+
+     /* library initialization */
+
+     lua_State *L = lua_open();
+
+     luacom_open(L);
+
+     if(lua_dofile("luacom_sample.lua") != 0) {
+       puts("Error running sample!");
+       exit(1);
+     }
+     luacom_close(L);
+     lua_close(L);
+
+     CoUninitialize(NULL);
+     return 0;
+   }
+</PRE>
+
+Notice that it's necessary to initialize COM before
+<code>lua_open</code> and to terminate it only after the last
+<code>lua_close</code>, otherwise fatal errors may occur.
+
+<H1><A NAME="SECTION00320000000000000000">
+2.2 Locating COM Objects</A>
+</H1>
+
+The first step to use a COM object is to find it. COM objects are
+registered in the system registry and are associated with an unique
+Class Identifier, known as CLSID. A CLSID may also be associated with
+a string known as Programmatic Identifier or ProgID. This last one is
+the easiest way to reference a COM object. E.g., the ProgID for
+Microsoft&#169; Word&#169; is ``<TT>Word.Application</TT>''.
+
+If one do not know in advance what is the CLSID or the ProgID of the
+object of interest, them it's possible to use tools like OleView to
+find the object, although the best place to find it is in the object's
+documentation.
+
+<H1><A NAME="SECTION00330000000000000000">
+2.3 Creating Objects</A>
+</H1>
+
+With the ProgID or the CLSID of an object, it's now possible to create
+a new instance of it or to get a running instance. To do so, the
+easiest way is to use the method CreateObject of the Lua API:
+
+<PRE>
+
+  word = luacom.CreateObject("Word.Application")
+
+  assert(word)
+
+  word.Visible = true
+</PRE>
+
+If there is an already running instance of the object you want,
+<TT>GetObject</TT> must be used to use it. The following code
+illustrates this:
+
+<PRE>
+
+  -- If there is an instance of Word(r) running,
+  -- it will end it
+  word = luacom.GetObject("Word.Application")
+
+  if word then
+    word:Quit()
+    word = nil
+  end
+</PRE>
+<H1><A NAME="SECTION00340000000000000000">
+2.4 Getting Help about an Object</A>
+</H1>
+
+To use a COM object, the first thing one must know is its
+<I>interface</I>, that is, its set of methods and properties. This
+information normally is available in the documentation of the object,
+but sometimes one do not have access to this documentation. LuaCOM
+can offer some help if the object has type information. If the object
+has an associated help file, LuaCOM can launch it using the method
+<TT>ShowHelp</TT>:
+
+<PRE>
+  word = luacom.CreateObject("Word.Application")
+  
+  assert(word)
+   
+  luacom.ShowHelp(word)
+</PRE>
+
+If the object has an associated type library, LuaCOM can generate
+and display an HTML file describing it. This information can also be
+read using other type library browsers, as OleView.
+
+The method <TT>DumpTypeInfo</TT> can be used in console applications to
+list the methods and properties of the interface. It does not give
+much information, but can be helpful when playing with an object.
+
+<H1><A NAME="SECTION00350000000000000000">
+2.5 Methods and Properties</A>
+</H1>
+
+After creating an object, the next step is to use it. This is
+primarily done through <I>method calls</I> and <I>property
+accesses</I>. To call a method of the object, do it as if the method was
+a function stored in a Lua table whose key is the method name:
+
+<PRE>
+-- Here we call the method 'Show' of the COM object
+myobj:Show()
+
+-- A method with a return value
+result = myobj:CheckState()
+
+-- A method with parameters
+file = myobj:LoadFile("test.xyz", 1)
+
+-- A method with output values
+x, y = myobj:UpdatePosition(x, y)
+</PRE>
+
+To read or write simple properties, one must simply use them as if
+they were normal table fields.
+
+<PRE>
+-- Reading properties
+value1 = obj1.Value
+value1 = obj2.Value
+
+-- writing a property
+obj3.Value = value1 + value2
+</PRE>
+
+Automation includes support to <I>parametrized properties</I>. These
+can be accessed (or written) using accessor functions.
+
+<PRE>
+value = obj:getMatrixValue(1,1)
+
+value = value*0,125
+
+obj:setMatrixValue(1, 1, value)
+</PRE>
+<H1><A NAME="SECTION00360000000000000000">
+2.6 Releasing Objects</A>
+</H1>
+Objects are automatically released using Lua's garbage collection
+mechanism, that is, when there are no references to them in
+Lua. However, some objects may demand an explicit termination method
+call, like ``Quit''.
+
+<PRE>
+obj = luacom.CreateObject("MyApp.MyObj")
+
+-- Here we force an immediate release of the object
+obj = nil
+collectgarbage()
+</PRE>
+
+Notice that if there is any references to the COM object alive in
+Lua then the application (or library) that implements it will not
+exit.
+
+<H1><A NAME="SECTION00400000000000000000">
+3. LuaCOM Elements</A>
+</H1>
+
+  LuaCOM is composed by the following elements:
+
+<UL>
+<LI>LuaCOM objects, which make COM objects available in Lua;
+
+</LI>
+<LI>LuaCOM API, a set of functions used to do a variety of
+    tasks (library initialization, object creation, implementation of
+    Automation interfaces in Lua, manipulation of connection points
+    etc.);
+
+</LI>
+<LI>Automation binding, which translates accesses on LuaCOM
+    objects to COM interface calls and COM accesses on an interface
+    implemented in Lua to Lua function calls or table accesses;
+
+</LI>
+<LI>LuaCOM type conversion rules, which govern the type conversion
+    between Lua and Automation types;
+
+</LI>
+<LI>LuaCOM parameter passing rules, which describe how LuaCOM
+    translate a Lua parameter list to a COM one and vice versa;
+
+</LI>
+<LI>other objects, like typelib, typeinfo, enumerator etc.
+
+</LI>
+</UL>
+<H1><A NAME="SECTION00410000000000000000">
+3.1 LuaCOM API</A>
+</H1>
+
+  The LuaCOM API is divided in two parts: the standard API and the
+  extended API. The standard API comprises the core functionality
+  needed to use COM objects. The extended API includes more advanced
+  features to Lua API that simplify the development of applications
+  using LuaCOM. This distinction has been made due to the possible
+  unbounded growth of features, which could end up cluttering the
+  library and making it bigger and bigger and more and more difficult
+  to use. For now, the extended API is entirely implemented in Lua 5
+  and can be easily removed without trouble. 
+
+  The standard API is further divided in to classes: the Lua API and
+  the C/C++ API. The C/C++ API is used primarily for initialization of
+  the library and for low-level construction of LuaCOM objects. It
+  is declared in the header file <TT>luacomh</TT>. The Lua API
+  permits Lua programs to access all the functionality of LuaCOM. It
+  is implemented as a set of functions inside a global table named
+  <code>luacom</code>; hereafter these functions will be called LuaCOM
+  <I>methods</I><A NAME="tex2html3"
+  HREF="#foot852"><SUP>3.1</SUP></A>. This table is
+  created and populated when the C/C++ API function
+  <TT>luacom_open</TT> is called. Notice that the extended API lies in
+  a different table, called <code>luacomE</code>. Below there is summary of
+  the LuaCOM API. Detailed information on these methods is available
+  in chapter <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#chap:reference">6</A>.
+
+  <DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><FONT SIZE="+1">Standard Lua API</FONT></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Method </DIV></B></TD></TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Description </DIV></B></TD></TR>
+</TABLE></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>CreateObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a LuaCOM object. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>NewObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a LuaCOM object implemented in Lua. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>GetObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a LuaCOM object associated with an
+    instance of an already running COM object. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ExposeObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Exposes a LuaCOM object, so
+    that other applications can get a reference to it. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>RevokeObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Undoes the operation of <TT>ExposeObject</TT>. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>RegisterObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Fills in the registry entries necessary for exposing a
+    COM object. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>Connect</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a connection point between an object and a Lua table. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ImplInterface</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Implements an IDispatch
+    interface using a Lua table. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ImplInterfaceFromTypelib</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Implements an
+    IDispatch interface described in a Type Library using a Lua table. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>addConnection</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Connects two LuaCOM objects. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>releaseConnection</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Disconnects a LuaCOM object from its
+    connection point. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>isMember</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Checks whether a name correspond to a method
+    or a property of an LuaCOM object. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ProgIDfromCLSID</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Gets the ProgID associated with a CLSID. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>CLSIDfromProgID</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Gets the CLSID associated with a ProgID. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>GetIUnknown</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Returns an <TT>IUnknown</TT> interface to a LuaCOM
+    object as a full userdata. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>DumpTypeInfo</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Dumps to the console the type
+    information of the specified LuaCOM object. This method should
+    be used only for debugging purposes. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>GetCurrentDirectory</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Returns the current directory. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>CreateLuaCOM</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Transforms an IUnknown full userdata
+  into a LuaCOM object. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ImportIUnknown</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Converts a light userdata (pointer)
+  to an IUnknown full userdata. 
+<BR></TD>
+</TR>
+</TABLE>
+</DIV>
+
+  <DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><FONT SIZE="+1">Extended Lua API</FONT></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Method </DIV></B></TD></TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Description </DIV></B></TD></TR>
+</TABLE></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>CreateLocalObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a LuaCOM object as an out-of-process server. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>CreateInprocObject</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a LuaCOM object as an in-process server. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ExportConstants</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Exports all the constants of a type
+  library (standalone or bound to a LuaCOM object) to the global
+  environment (or optionally to a table). 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>DumpTypeLib</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates an HTML file describing a type library. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>GetType</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Returns a string describing the type of object, in the
+    case its an object belonging to the LuaCOM library. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ViewTypeLib</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Runs DumpTypeLib and shows the created file using
+    Internet Explorer&#169;. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>pairs</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Does the same as pairs for COM Enumerators. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>FillTypeLib</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a table describing a type
+    library. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>FillTypeInfo</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=198>Creates a table describing a type info. 
+<BR></TD>
+</TR>
+</TABLE>
+</DIV>
+
+  <DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><FONT SIZE="+1">Standard C/C++ API</FONT></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Function </DIV></B></TD></TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170><TABLE  WIDTH="272">
+<TR><TD> <DIV ALIGN="CENTER"><B>Description </DIV></B></TD></TR>
+</TABLE></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>luacom_open</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Initializes the LuaCOM library in a
+    Lua state. It must be called before any use of LuaCOM
+    features. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>luacom_close</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>LuaCOM's termination function. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>luacom_detectAutomation</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>This function is a helper to create COM servers. It looks
+    in the command line for the switches ``/Automation'' and
+    ``/Register'' and call some user-defined Lua functions accordingly. 
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>luacom_IDispatch2LuaCOM</code></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Takes an IDispatch interface and creates a LuaCOM
+    object to expose it, pushing the object on the Lua stack. 
+<BR></TD>
+</TR>
+</TABLE>
+</DIV>
+<H1><A NAME="SECTION00420000000000000000">
+3.2 LuaCOM objects</A>
+</H1>
+  LuaCOM deals with <I>LuaCOM objects</I>, which are no more than
+  a Lua table with the LuaCOM metatable and a reference to the
+  LuaCOM C++ object; this one is, in turn, a proxy for the COM
+  object: it holds an <TT>IDispatch</TT> pointer to the object and translates
+  Lua accesses to Automation calls and property accesses. Here is a
+  sample where a LuaCOM object is used:
+
+<PRE>
+
+-- Instantiate a Microsoft(R) Calendar Object
+calendar = luacom.CreateObject("MSCAL.Calendar")
+
+-- Error check
+if calendar == nil then
+  print("Error creating object")
+  exit(1)
+end
+
+-- Method call
+calendar:AboutBox()
+
+-- Property Get
+current_day = calendar.Day
+
+-- Property Put
+calendar.Month = calendar.Month + 1
+
+print(current_day)
+print(calendar.Month)
+</PRE>
+
+Every time LuaCOM needs to convert an <TT>IDispatch</TT> pointer to Lua it
+creates a LuaCOM object. There are two situations where this
+happens:
+
+<UL>
+<LI>when calling LuaCOM API functions that return COM objects
+(<TT>CreateObject</TT>, <TT>GetObject</TT>, <TT>NewObject</TT>,
+<TT>Connect</TT> etc.) and
+</LI>
+<LI>when receiving return values from COM, where some of the values
+are <TT>IDispatch</TT> pointers.
+</LI>
+</UL>
+
+Follows a sample of these situations:
+
+<PRE>
+-- First, we get a luacom object using LuaCOM API
+
+excel = luacom.CreateObject("Excel.Application")
+
+assert(luacomE.GetType(excel) == "LuaCOM")
+
+
+-- now we get one from a method call
+sheets = excel.Sheets
+
+assert(luacomE.GetType(sheets) == "LuaCOM")
+</PRE>
+
+A LuaCOM object may be passed as a parameter to method calls on
+other LuaCOM objects, if these methods expect an argument of type
+<TT>dispinterface</TT>. Here is a sample to illustrate this situation:
+
+<PRE>
+-- Gets a running instance of Excel
+excel = luacom.GetObject("Excel.Application")
+
+-- Gets the set of worksheets
+sheets = excel.Worksheets
+
+-- gets the first two sheets
+sheet1 = sheets:Item(1)
+sheet2 = sheets:Item(2)
+
+-- Exchange them (here we pass the second sheet as a parameter
+-- to a method)
+sheet1:Move(nil, sheet2)
+</PRE>
+
+There are two kinds of LuaCOM objects: <I>typed</I> and
+<I>generic</I> ones. The typed ones are those whose COM object has
+type information. The generic ones are those whose COM object does not
+supply any type information. This distinction is important in some
+situations.
+
+<H2><A NAME="SECTION00421000000000000000"></A>
+<A NAME="sec:object-disposal"></A>
+<BR>
+3.2.1 Object Disposal
+</H2>
+
+LuaCOM objects are released through Lua's garbage collection
+mechanism, so there isn't any explicit API method to destroy them.
+
+<H4><A NAME="SECTION00421010000000000000">
+3.2.1.0.1 Caution</A>
+</H4> LuaCOM only tracks references to COM objects. It
+does not work with the concepts of ``application'', ``component'',
+``process'' etc. It does not know even which objects are part of the
+same component or application. This has some consequences on the
+object disposal:
+
+<UL>
+<LI>a component may only consider as ``finished'' its relationship
+with LuaCOM when all references to its objects are released, not
+only the one created with <TT>CreateObject</TT>;
+</LI>
+<LI>some components have a ``Quit'' method. This may close the
+component's interface, but it could remain running if there are any
+references to it. Nevertheless, these references cannot be reliably
+used after the ``Quit'' method has been called. To release the
+component, one must assign <TT>nil</TT> to all references to the
+component (and its sub-objects) and then call <TT>collectgarbage</TT>.
+</LI>
+</UL>
+<H1><A NAME="SECTION00430000000000000000">
+3.3 Automation binding</A>
+</H1>
+
+  The Automation binding is responsible for translating the table
+  accesses to the LuaCOM object into COM interface calls. Besides
+  that, it also provides a mechanism for implementing <TT>dispinterfaces</TT>
+  using ordinary Lua tables.
+
+<H2><A NAME="SECTION00431000000000000000">
+3.3.1 Implementing <TT>dispinterfaces</TT> in Lua</A>
+</H2>
+
+The Automation binding has a <TT>C++</TT> class called
+<TT>tLuaDispatch</TT> that implements a generic <TT>IDispatch</TT>
+interface. The implementation of this class translates the method
+calls and property accesses done on the objects of this class to Lua
+calls and table accesses. So, one may implement a <TT>dispinterface</TT>
+entirely in Lua, provided it has a type library describing it. This
+type library may be a stand-alone one (referenced by its location on
+the file system) or may be associated with some registered
+component. In this case, it may be referenced by the <TT>ProgID</TT> of
+the component.
+
+The <TT>C++</TT> objects of this class can be used in any place where
+an <TT>IDispatch</TT> or <TT>IUnknown</TT> interface is expected. LuaCOM
+takes care of these conversion. Follows a sample implementation of a
+<TT>dispinterface</TT> in Lua.
+
+<PRE>
+
+-- Creates and fills the Lua table that will implement the
+-- COM interface
+
+events_table = {}
+
+function events_table:AfterUpdate()
+  print("AfterUpdate called!")
+end
+
+-- Here we implement the interface DCalendarEvents, which is part
+-- of the Microsoft(R) Calendar object, whose ProgID is MSCAL.Calendar
+
+events_obj = luacom.ImplInterface(
+  events_table, 
+  "MSCAL.Calendar",
+  "DCalendarEvents")
+
+-- Checks for errors
+--
+if events_obj == nil then
+  print("Implementation failed")
+  exit(1)
+end
+
+-- Tests the interface: this must generate a call to the events:AfterUpdate
+-- defined above
+--
+events_obj:AfterUpdate()
+</PRE>
+
+  If the interface to be implemented is described in a stand-alone
+  type library, the method <code>ImplInterfaceFromTypelib</code>
+  must be used instead:
+
+<PRE>
+
+-- Creates and fills the Lua table that will implement the
+-- Automation interface
+
+hello_table = {}
+
+function hello:Hello()
+  print("Hello World!")
+end
+
+-- Here we implement the interface IHello
+--
+hello_obj = luacom.ImplInterfaceFromTypelib("hello.tlb","IHello")
+
+-- Checks for errors
+--
+if hello_obj == nil then
+  print("Implementation failed")
+  os.exit(1)
+end
+
+-- Tests the interface
+--
+hello_obj:Hello()
+</PRE>
+
+  Both methods return a LuaCOM object, whose corresponding
+  <TT>IDispatch</TT> interface is implemented by the supplied table. This
+  LuaCOM object can be passed as an argument to COM methods who
+  expect a <TT>dispinterface</TT> or to LuaCOM API methods (like
+  <code>addConnection</code>).
+
+  One can also use the <code>NewObject</code> method, which is best suited
+  to the situation where one needs to create a complete component in
+  Lua and wants to export it, so that it can be accessed through COM
+  by any running application.
+
+<H2><A NAME="SECTION00432000000000000000"></A>
+<A NAME="sec:using-meth-prop"></A>
+<BR>
+3.3.2 Using Methods and Properties
+</H2>
+
+The <TT>dispinterfaces</TT> have two ``types'' of members: properties and
+methods. LuaCOM deals with both.
+
+Method accesses are done in the same way as calling Lua functions
+stored in a table and having a ``self'' parameter:
+
+<PRE>
+
+obj = luacom.CreateObject("TEST.Test")
+
+if obj == nil then
+  exit(1)
+end
+
+-- method call
+a = obj:Teste(1,2)
+
+-- another one
+obj:Teste2(a+1)
+</PRE>
+
+It's important to notice the need of using the colon - ``:'' - for
+method calls. Although LuaCOM does not use the <TT>self</TT>
+parameter that Lua passes in this case, its presence is assumed,
+that is, LuaCOM always skips the first parameter in the case of
+method calls; forgetting it may cause nasty bugs. Notice that this
+rule doesn't apply when using the default method of a LuaCOM object
+stored in a table or in a property of another LuaCOM object (see
+section <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:default-methods">4</A> below).
+
+Accessing properties is much like the same of accessing fields in
+Lua tables:
+
+<PRE>
+obj = luacom.CreateObject("TEST.Test")
+
+if obj == nil then
+  exit(1)
+end
+
+-- property access
+a = obj.TestData
+
+-- property setting
+obj.TestData = a + 1
+</PRE>
+
+Properties may also be accessed as methods. This is mandatory when
+dealing with parameterized properties, that it, ones that accept (or
+demand) parameters. A common example of this situation is the ``Item''
+property of collections.
+
+<PRE>
+-- property access
+a = obj:TestData()
+
+-- Parametrized property access
+b = obj:TestInfo(2)
+
+-- Accessing collections
+c = obj.Files:Item(2)
+</PRE>
+
+Notice that the colon - ``:'' - must also be used in this situation.
+
+When accessing properties with method calls, LuaCOM always
+translates the method call to a read access (property get). To set the
+value of a property using a method call, it's necessary append the
+prefix ``set''<A NAME="tex2html4"
+  HREF="#foot208"><SUP>3.2</SUP></A> to the property name and the new value must be
+supplied as the last argument.
+
+<PRE>
+-- property access
+a = obj:TestData()
+
+-- Setting the property
+b = obj:setTestInfo(2)
+
+-- Setting a parametrized property
+c = obj.Files:setItem(2, "test.txt")
+</PRE>
+
+The prefix ``get'' may also be used, to clarify the code, although
+it's not necessary, as the default behavior is to make a read access.
+
+<PRE>
+-- property access
+a = obj:getTestData()
+
+b = obj:getTestInfo(2)
+
+c = obj.Files:getItem(2)
+</PRE>
+<H3><A NAME="SECTION00432100000000000000"></A>
+<A NAME="sec:extens-interf"></A>
+<BR>
+3.3.2.1 Extensible interfaces
+</H3>
+LuaCOM allows the use of properties as simple Lua fields just for
+objects that have type information. Nevertheless, some objects that
+<I>have</I> type information describing their interfaces implement
+properties that are not described in the type library: these objects
+implement <I>extensible</I> interfaces. Those properties can only be
+used with accessor functions, as shown in section
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:gener-luac-objects">4</A>. An example of such behaviour is found in
+WMI objects (Windows Management Instrumentation).
+
+<H3><A NAME="SECTION00432200000000000000"></A>
+<A NAME="sec:default-methods"></A>
+<BR>
+3.3.2.2 Default methods
+</H3>
+A <TT>dispinterface</TT> can have a default method or property, that is, one
+that is called when the client does not specify the method
+name. LuaCOM calls the default method when the object itself is used
+as a function.
+
+<PRE>
+
+  excel = luacom.CreateObject("Excel.Application")
+  excel.Visible = true
+  
+  excel.Workbooks:Add()
+
+  
+  -- Here we call the default method
+  -- notice we DID NOT use the colon, as
+  -- the object used is Sheets, not excel
+
+  sheet = excel.Sheets(1)
+  print(sheet.Name)
+  
+  -- Here we also call the default method
+  -- We must supply the self parameter
+  sheets = excel.Sheets
+  sheet2 = sheets(2)
+  print(sheet2.Name)
+  
+  -- Setting values
+  excel.Sheets(1).Name = "MySheet1"
+  
+  excel:Quit()
+</PRE>
+
+This can be very useful when dealing with collections, as commonly
+they have a default <TT>Item</TT> property.
+
+WARNING: one must be careful not to put the colon when using default methods of
+LuaCOM objects contained in table or in other LuaCOM objects (see
+the sample above).
+
+<H3><A NAME="SECTION00432300000000000000"></A>
+<A NAME="sec:gener-luac-objects"></A>
+<BR>
+3.3.2.3 Generic LuaCOM objects
+</H3>
+To read or write properties in generic LuaCOM objects, it's
+necessary access them as method calls with the right prefix
+(get/set). The simpler semantic of table field access does not work
+here.
+
+<PRE>
+obj_typ = luacom.CreateObject("Some.TypedObject")
+obj_untyp = luacom.CreateObject("Untyped.Object")
+
+-- property read (get)
+a = obj_typ.Value
+b = obj_untyp:getValue()
+
+-- property write (set)
+obj.typ = a + 1
+obj_untyp:setValue(b + 1)
+</PRE>
+<H3><A NAME="SECTION00432400000000000000">
+3.3.2.4 Property Access in Lua</A>
+</H3> When implementing a COM
+interface in Lua, LuaCOM also supports the concept of property and
+of indexed properties. LuaCOM translate property reads and writes to
+table field accesses:
+
+<PRE>
+interface = {}
+
+interface.Test = 1
+interface.TestIndex = {2,3}
+
+obj = luacom.ImplInterface(interface, "TEST.Test", "ITest")
+
+-- must print "1"
+print(obj.Test)
+
+-- must print nil (if there is no member named Test2)
+print(obj.Test2)
+
+-- this writes the filed Test
+obj.Test = 1
+
+-- Indexed property read. Must return 3 (remember that
+-- indexed tables start at 1 in Lua)
+i = obj:TestIndex(2)
+
+-- Sets the indexed field
+obj:setTestIndex(2,4)
+
+-- Now must return 4
+i = obj:TestIndex(2)
+</PRE>
+<H2><A NAME="SECTION00433000000000000000"></A>
+<A NAME="sec:conn-points:-handl"></A>
+<BR>
+3.3.3 Connection Points: handling events
+</H2>
+  The <I>connection points</I> are part of a standard ActiveX
+  mechanism whose primary objective is to allow the ActiveX object
+  to notify its owner of any kind of events. The connection point
+  works as an ``event sink'', where events and notifications go
+  through.
+
+  To establish a connection using LuaCOM, the owner of the ActiveX object
+  must create a table to implement the connection interface,
+  whose description is provided by the ActiveX object (this interface
+  is called a <I>source</I> interface) and then call the API method
+  <code>Connect</code>, passing as arguments the LuaCOM object
+  for the ActiveX object and the implementation table. Doing this,
+  LuaCOM will automatically find the default source interface, create
+  a LuaCOM object implemented by the supplied table and then connect
+  this object to the ActiveX object. Here follows a sample:
+
+<PRE>
+
+-- Creates the COM object
+--
+calendar = luacom.CreateObject("MSCAL.Calendar")
+
+if calendar == nil then
+  os.exit(1)
+end
+
+-- Creates implementation table
+--
+calendar_events = {}
+
+function calendar_events:AfterUpdate()
+  print("Calendar updated!")
+end
+
+-- Connects object and table
+--
+res = luacom.Connect(calendar, calendar_events)
+
+if res == nil then
+  exit(1)
+end
+
+-- This should trigger the AfterUpdate event
+--
+calendar:NextMonth()
+</PRE>
+
+  It's also possible to separately create a LuaCOM object implementing the
+  connection point source interface and then connect it to the object using
+  <code>AddConnection</code>.
+
+<PRE>
+
+-- Instances the COM object
+--
+calendar = luacom.CreateObject("MSCAL.Calendar")
+
+if calendar == nil then
+  print("Error instantiating calendar")
+  os.exit(1)
+end
+
+-- Creates implementation table
+--
+calendar_events = {}
+
+function calendar_events:AfterUpdate()
+  print("Calendar updated!")
+end
+
+-- Creates LuaCOM object implemented by calendar_events
+--
+event_handler = luacom.ImplInterface(calendar_events,
+  "MSCAL.Calendar",
+   "DCalendarEvents")
+
+if event_handler == nil then
+  print("Error implementing DCalendarEvents")
+  exit(1)
+end
+
+-- Connects both objects
+--
+luacom.addConnection(calendar, event_handler)
+
+-- This should trigger the AfterUpdate event
+--
+calendar:NextMonth()
+
+-- This disconnects the connection point established
+--
+luacom.releaseConnection(calendar)
+
+-- This should NOT trigger the AfterUpdate event
+--
+calendar:NextMonth()
+</PRE>
+<H4><A NAME="SECTION00433010000000000000">
+3.3.3.0.1 Message loop</A>
+</H4>
+To receive events it's necessary to have a message loop in the thread
+that owns the object used to make the connection, as COM deals with
+multiple method calls serializing then in a message queue created
+during COM initialization. Without a message loop, the objects
+implemented on the client side, that is, with LuaCOM, wont't ever
+receive method calls from the server side, that is, the COM objects
+used through LuaCOM.
+
+<H2><A NAME="SECTION00434000000000000000">
+3.3.4 Parameter Passing</A>
+</H2>
+
+  LuaCOM has some policies concerning parameter passing. They
+  specify how LuaCOM will translate COM parameter lists to Lua
+  and vice-versa. There are two different situations to which these
+  policies apply: calling a method of a COM object from Lua and
+  calling a Lua function from COM. The main question here is how to
+  deal with the different types of parameters supported by COM
+  (``in'' parameters, ``out'' parameters, ``in-out'' parameters,
+  ``optional'' parameters and ``defaultvalue'' parameters). There is
+  also a special policy concerning generic LuaCOM objects.
+
+<H3><A NAME="SECTION00434100000000000000">
+3.3.4.1 Calling COM from Lua</A>
+</H3>
+
+  This situation happens when accessing a property or calling a method
+  of a COM object through the LuaCOM object. Here follows a
+  sample:
+
+<PRE>
+word = luacom.GetObject("Word.Application")
+
+-- Here we are calling the "Move" method of the Application object of
+-- a running instance of Microsoft(R) Word(R)
+word:Move(100,100)
+</PRE>
+
+  In this situation, there are two steps in the parameter passing
+  process:
+
+<OL>
+<LI>convert Lua parameters to COM (this will be called the
+``lua2com'' situation);
+</LI>
+<LI>convert COM's return value <I>and</I> output values back to
+Lua (this will be called the ``com2lua'' situation).
+</LI>
+</OL>
+<H4><A NAME="SECTION00434110000000000000">
+3.3.4.1.1 lua2com situation</A>
+</H4> The translation is done based on the
+type information of the method (or property); it's done following the
+order the parameters appear in the type information of the method. The
+Lua parameters are used in the same order. For each parameter there
+are three possibilities:
+
+<DL>
+<DT><STRONG>The parameter is an ``in'' parameter</STRONG></DT>
+<DD>LuaCOM gets the first
+Lua parameter not yet converted and converts it to COM using
+LuaCOM type conversion engine.
+
+</DD>
+<DT><STRONG>The parameter is an ``out'' parameter</STRONG></DT>
+<DD>LuaCOM ignores this
+parameter, as it will only be filled by the called method. That is,
+the ``out'' parameters SHOULD NOT appear in the Lua parameter list.
+
+</DD>
+<DT><STRONG>The parameter is an ``in-out'' parameter</STRONG></DT>
+<DD>LuaCOM does the
+same as for ``in'' parameters.
+
+</DD>
+</DL>
+
+When the caller of the method wants to omit a parameter, it must pass
+the <TT>nil</TT> value; LuaCOM then proceeds accordingly, informing
+the called method about the omission of the parameter. If the
+parameter has a default value, it is used instead. Notice that
+LuaCOM does not complain when one omits non-optional parameters. In
+fact, LuaCOM ignores the fact that a parameter is or isn't
+optional. It leaves the responsibility for checking this to the
+implementation of the called method.
+
+<H4><A NAME="SECTION00434120000000000000">
+3.3.4.1.2 com2lua situation</A>
+</H4> When the called method finishes,
+LuaCOM translates the return value and the output values (that is,
+the values of the ``out'' and ``in-out'' parameters) to Lua return
+values. That is, the method return value is returned to the Lua code
+as the first return value; the output values are returned in the order
+they appear in the parameter list (notice that here we use the Lua
+feature of multiple return values). If the method does not have return
+values, that is, is a ``<TT>void</TT>'' method, the return values will
+be the output values. If there are no output values either, then there
+will be no return values.
+
+The called method can omit the return value or the output values;
+LuaCOM them will return <TT>nil</TT> for each omitted value.
+
+To illustrate these concepts, here follows a sample of these
+situations. First, we show an excerpt of an <TT>ODL</TT> file
+describing a method of a COM object:
+
+<PRE>
+
+  HRESULT TestShort(
+    [in] short p1, // an "in" parameter
+    [out] short* p2, // an "out" parameter
+    [in,out] short* p3, // an "in-out" parameter
+    [out,retval] short* retval); // the return value
+</PRE>
+
+  Now follows a sample of what happens when calling the method:
+
+<PRE>
+-- assume that "com" is a LuaCOM object
+
+-- Here we set p1 = 1, p3 = 2 and leave p2 uninitialized
+-- When the method returns, r1 = retval and r2 = p2 and r3 = p3
+r1, r2, r3 = com:TestShort(1,2)
+
+-- WRONG! The are only two in/in-out parameters! Out parameters
+-- are ignored in the lua2com parameter translation
+r1, r2, r3 = com:TestShort(1,2,3) -- WRONG!
+
+-- Here p1 = 1, p2 is uninitialized and p3 is omitted.
+r1, r2, r3 = com:TestShort(1)
+
+-- Here we ignore the output value p3
+r1,r2 = com:TestShort(1)
+
+-- Here we ignore all output values (including the return value)
+com:TestShort(1,2)
+</PRE>
+<H4><A NAME="SECTION00434130000000000000">
+3.3.4.1.3 Generic LuaCOM objects</A>
+</H4>
+
+When dealing with generic LuaCOM objects, the binding adopts a
+different policy: all <TT>Lua</TT> parameters are converted to COM ones
+as ``in-out'' parameters. LuaCOM assumes that these methods always
+return a value; if the called method does not return anything,
+LuaCOM pushes a <TT>nil</TT> value<A NAME="tex2html5"
+  HREF="#foot261"><SUP>3.3</SUP></A>. As all parameters are
+set as ``in-out'', all of them will be returned back to Lua, modified
+or not by the called method.
+
+<H3><A NAME="SECTION00434200000000000000">
+3.3.4.2 Calling Lua from COM</A>
+</H3>
+
+  This situation happens when one implements a COM <TT>dispinterface</TT>
+  in Lua. The ActiveX binding has to translate the COM method
+  calls to Lua function calls. The policy here concerning parameter
+  list translation is the same as the one above, just exchanging
+  ``Lua'' for ``COM'' and vice-versa. That is, all ``in'' an
+  ``in-out'' COM parameters are translated to parameters to the
+  Lua function call (the output parameters are ignored). When the
+  call finishes, the first return value is translated as the return
+  value of the COM method and the other return values are translated
+  as the ``in-out'' and ``out'' values, following the order they
+  appear in the method's type information. Continuing the previous
+  example, here we show the implementation of a method callable from
+  COM:
+
+<PRE>
+
+implementation = {}
+
+-- This method receives TWO in/in-out parameters
+function implementation:TestShort(p1, p2)
+  -- the first one is the retval, the second the first out param
+  -- the third the second out param (in fact, an in-out param)
+  return p1+p2, p1-p2, p1*p2
+end
+
+-- Implements an interface
+obj = luacom.ImplInterface(implementation, "TEST.Test", ITest)
+
+-- calls the function implementation:TestShort via COM
+r1, r2, r3 = obj:TestShort(1,2)
+</PRE>
+<H2><A NAME="SECTION00435000000000000000">
+3.3.5 Exception Handling</A>
+</H2>
+When a run time error occurr when using LuaCOM's methods or objects,
+there are two possible actions LuaCOM can take:
+
+<UL>
+<LI>to signal the error using <code>lua_error</code>;
+</LI>
+<LI>ignore the error, just doing nothing or returning some kind of
+error value.
+</LI>
+</UL>
+
+The run time errors can be divided into three types:
+
+<UL>
+<LI>errors inside API calls, like <TT>CreateObject</TT>;
+</LI>
+<LI>errors when using LuaCOM objects (COM method calls);
+</LI>
+<LI>errors inside COM objects implemented in Lua.
+</LI>
+</UL>
+
+The third type of error is always translated into a COM exception
+returned to the server. To ease debugging, these errors are also
+logged (if the logging facility has been activated), as the server can
+silenty ignore these exceptions, specially in events.
+
+The behaviour of LuaCOM for the other two types can be
+customized. There is a table called <TT>config</TT> inside the LuaCOM
+table. This table holds three fields related to error handling:
+
+<DL>
+<DT><STRONG><TT>abort_on_API_error</TT></STRONG></DT>
+<DD>if false, LuaCOM silently
+fails on errors inside API calls. This is NOT true for errors caused
+by supplying bad parameters: these always generate calls to
+<code>lua_error</code>. The default value for this field is <I>false</I>.
+
+</DD>
+<DT><STRONG><TT>abort_on_error</TT></STRONG></DT>
+<DD>if false, errors inside method calls
+and property accesses are also ignored, possibly return <code>nil</code>
+where a return value is expected. The default value for this field is
+<I>true</I>.
+
+</DD>
+<DT><STRONG><TT>last_error</TT></STRONG></DT>
+<DD>every time a run time error occurr LuaCOM
+sets this field with the text describing the error. This field can be
+used to check if some operation failed; just remember to set it to
+<TT>nil</TT> before the operation of interest.
+
+</DD>
+</DL>
+
+All errors are also logged. Notice that some of the logged exceptions
+are not really errors: they are side-effects of the extensive use of
+exception handling inside LuaCOM code.
+
+<H1><A NAME="SECTION00440000000000000000"></A>
+<A NAME="sect:type_conv"></A>
+<BR>
+3.4 Type Conversion
+</H1>
+
+LuaCOM is responsible for converting values from COM to Lua and
+vice versa. Most of the types can be mapped from COM to Lua and vice
+versa without trouble. But there are some types for which the mapping
+is not obvious. LuaCOM then uses some predefined rules to do the
+type conversion. These rules must be known to avoid misinterpretation
+of the conversion results and to avoid errors.
+
+<H2><A NAME="SECTION00441000000000000000"></A>
+<A NAME="subsect:boolean"></A>
+<BR>
+3.4.1 Boolean values
+</H2>
+
+<H4><A NAME="SECTION00441010000000000000">
+3.4.1.0.1 Lua 5</A>
+</H4>
+LuaCOM uses the boolean values <code>true</code> and <code>false</code>, but
+does not works with the older convention (<code>nil</code> and
+non-<code>nil</code>; see paragraph below).
+
+<H4><A NAME="SECTION00441020000000000000">
+3.4.1.0.2 Lua 4</A>
+</H4>
+This version of Lua uses the <TT>nil</TT> value as false and
+non-<TT>nil</TT> values as true. As LuaCOM gives a special meaning
+for <TT>nil</TT> values in the parameter list, it can't use Lua
+convention for true and false values; instead, LuaCOM uses the
+<TT>C</TT> convention: the true value is a number different from zero
+and the false value is the number zero. Here follows a sample:
+
+<PRE>
+
+-- This function alters the state of the of the window.
+-- state is a Lua boolean value
+-- window is a LuaCOM object
+
+function showWindow(window, state)
+
+  if state then
+    window.Visible = 1
+
+    -- this has the same result
+    windows.Visible = -10
+  else
+    window.Visible = 0
+  end
+
+end
+
+-- Shows window
+showWindow(window, 1)
+
+-- Hides window
+showWindow(window, nil)
+</PRE>
+<H2><A NAME="SECTION00442000000000000000">
+3.4.2 Pointers to <TT>IDispatch</TT> and LuaCOM objects</A>
+</H2>
+
+A pointer to <TT>IDispatch</TT> is converted to a LuaCOMobject whose
+implementation is provided by this pointer. A LuaCOMobject is
+converted to COM simply passing its interface implementation to
+COM.
+
+<H2><A NAME="SECTION00443000000000000000">
+3.4.3 Pointers to <TT>IUnknown</TT></A>
+</H2>
+LuaCOM just allows passing and receiving <TT>IUnknown</TT> pointers;
+it does not operate on them. They are converted from/to userdatas with a
+specific metatable.
+
+<H2><A NAME="SECTION00444000000000000000">
+3.4.4 Arrays and Tables</A>
+</H2>
+
+LuaCOM converts Lua tables to <TT>SAFEARRAY</TT>'s and
+vice-versa. To be converted, Lua tables must be ``array-like'', that
+is, all of its elements must be or ``scalars'' or tables of the same
+length. These tables must also be ``array-like''. Here are some
+samples of how is this conversion done:
+
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER">Lua table</TD>
+<TD ALIGN="CENTER">Safe Array</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>table = {"name", "phone"}</code></TD>
+<TD ALIGN="CENTER"><TABLE  WIDTH="227">
+<TR><TD>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+\left[\begin{array}{cc}
+  "name"     & "phone"   \\
+\end{array}\right]
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="364" HEIGHT="37" BORDER="0"
+ SRC="img10000.png"
+ ALT="\begin{displaymath}
+\left[\begin{array}{cc}
+''name'' &amp; ''phone'' \\
+\end{array}\right]
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P></TD></TR>
+</TABLE></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>table = {{1,2},{4,9}}</code></TD>
+<TD ALIGN="CENTER"><TABLE  WIDTH="227">
+<TR><TD>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+\left[\begin{array}{cc}
+        1  & 2   \\
+         4 & 9   \\
+\end{array} \right]
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="311" HEIGHT="54" BORDER="0"
+ SRC="img20000.png"
+ ALT="\begin{displaymath}
+\left[\begin{array}{cc}
+1 &amp; 2 \\
+4 &amp; 9 \\
+\end{array} \right]
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P></TD></TR>
+</TABLE></TD>
+</TR>
+</TABLE>
+</DIV>
+<H2><A NAME="SECTION00445000000000000000">
+3.4.5 <TT>CURRENCY</TT> type</A>
+</H2>
+The <TT>CURRENCY</TT> values are converted to Lua as numbers. When
+converting a value to COM where a <TT>CURRENCY</TT> is expected,
+LuaCOM accepts both numbers and strings formatted using the current
+locale for currency values. Notice that this is highly dependent on
+the configuration and LuaCOM just uses the VARIANT conversion
+functions.
+
+<H2><A NAME="SECTION00446000000000000000">
+3.4.6 <TT>DATE</TT> type</A>
+</H2>
+When converting from COM to Lua, the <TT>DATE</TT> values are
+transformed in strings formatted according to the current locale. The
+converse is true: LuaCOM converts strings formatted according to the
+current locale to <TT>DATE</TT> values.
+
+<H2><A NAME="SECTION00447000000000000000">
+3.4.7 Error Handling</A>
+</H2>
+When LuaCOM cannot convert a value from or to COM it issues an
+exception, that may be translated to a <code>lua_error</code> or to a COM
+exception, depending on who is the one being called.
+
+<H1><A NAME="SECTION00450000000000000000">
+3.5 Other Objects</A>
+</H1>
+
+LuaCOM deals with other objects besides COM Automation ones. Here we
+describe them briefly.
+
+<H2><A NAME="SECTION00451000000000000000">
+3.5.1 The Enumerator Object</A>
+</H2>
+This object is a proxy for a COM object that implements the
+<TT>IEnumVARIANT</TT> interface. It translates the calls made to fields
+of the table to method calls using that interface. Enumerators arise
+often when dealing with collections. To obtain an enumerator for a
+collection, use the Lua API method <TT>GetEnumerator</TT>. Example:
+
+<PRE>
+--
+-- Sample use of enumerators
+--
+
+-- Gets an instance
+word = luacom.GetObject("Word.Application")
+
+-- Gets an enumerator for the Documents collection
+docs_enum = luacom.GetEnumerator(word.Documents)
+
+-- Prints the names of all open documents
+doc = docs_enum:Next()
+
+while doc do
+  print(doc.Name)
+  doc = docs_enum:Next()
+end
+</PRE>
+
+The Extended Lua API method <TT>pairs</TT> allows the traversal of the
+enumeration using Lua's <TT>for</TT> statement. The sample above can be
+rewritten this way:
+
+<PRE>
+--
+-- Sample use of enumerators
+--
+
+-- Gets an instance
+word = luacom.GetObject("Word.Application")
+
+-- Prints the names of all open documents
+for index, doc in luacomE.pairs(word.Documents) do
+  print(doc.Name)
+end
+</PRE>
+<H2><A NAME="SECTION00452000000000000000">
+3.5.2 The Connection Point Container Object</A>
+</H2>
+
+This object allows a COM object implemented using LuaCOM to send
+events to its client. It's used primarily when implementing COM object
+in Lua, so see chapter <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:impl-com-objects">4</A> for more
+information.
+
+<H2><A NAME="SECTION00453000000000000000">
+3.5.3 The Typelib and Typeinfo Objects</A>
+</H2>
+These objects allow the navigation through the type descriptions of a
+LuaCOM object or of a type library. They are proxies for the
+interfaces <TT>ITypeLib</TT> and <TT>ITypeInfo</TT>, although not all
+methods are available. For more information, see sections
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:type-library-object">6.5</A> and <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:type-inform-object">6.6</A>.
+
+<H1><A NAME="SECTION00500000000000000000"></A>
+<A NAME="sec:impl-com-objects"></A>
+<BR>
+4. Implementing COM objects in Lua
+</H1>
+
+<H1><A NAME="SECTION00510000000000000000">
+4.1 Introduction</A>
+</H1>
+With LuaCOM it is possible to implement full-fledged COM objects
+using Lua. Here we understand a COM object as a composite of these
+parts:
+
+<UL>
+<LI>a server, which implements one or more COM objects;
+</LI>
+<LI>registry information, which associates a CLSID (Class ID) to
+a triple <I>server - type library - default interface</I>;
+</LI>
+<LI>a ProgID (Programmatic Identifier) which is a name associated to
+a CLSID;
+</LI>
+<LI>a type library containing a CoClass element.
+</LI>
+</UL>
+
+The registry information maps a ProgID to a CLSID, which is, in turn,
+mapped to a server. The type information describes the component, that
+is, which interfaces it exposes and what is the default interface.
+
+LuaCOM simplifies these tasks providing some helper functions to
+deal with registration and instantiation of COM servers. By now
+LuaCOM supports only EXE servers, although we do not see any problem
+in extending it to support DLL servers as well.
+
+<H1><A NAME="SECTION00520000000000000000">
+4.2 Is it really useful?</A>
+</H1>
+Some might argue that it would be better to implement COM object in
+languages like C++ or Visual Basic&#169;. That's true in many
+situations, and false in several others. First, dealing with COM is
+not easy and LuaCOM hides most its complexities; besides that, there
+is another compelling reason for using LuaCOM at least in some
+situations: the semantics of Lua tables and the way LuaCOM is
+implemented allows one to do some neat things:
+
+<UL>
+<LI>to expose as a COM object any object that can be accessed via
+Lua through a table. These might be CORBA objects, C++ objects, C
+structures, Lua code etc. Using this feature, a legacy application or
+library may be ``upgraded'' to COM world with little extra work;
+
+</LI>
+<LI>to use COM objects anywhere a Lua table is expected. For
+example, a COM object might be ``exported'' as a CORBA object,
+accessible through a network;
+
+</LI>
+<LI>to add and to redefine methods of an instance of a COM
+object. This might be very useful in the preceding situations: an
+object of interest might be incremented and them exported to another
+client.
+
+</LI>
+</UL>
+
+Of course all this flexibility comes at some cost, primarily
+performance. Anyway, depending on the application, the performance
+drawback might be negligible.
+
+LuaCOM does not solve all problems: there is still the need of a
+type library, which must be build using third party tools.
+
+<H1><A NAME="SECTION00530000000000000000">
+4.3 Terminology</A>
+</H1>
+
+To avoid misunderstandings, here we'll supply the meaning we give to
+some terms used in this chapter. We don't provide formal definitions:
+we just want to ease the understanding of some concepts. To better
+understand these concepts, see COM's documentation.
+
+<DL>
+<DT><STRONG>Component</STRONG></DT>
+<DD>a piece of software with some functionality that can
+be used by other components. It's composed by a set of objects that
+implement this functionality.
+
+</DD>
+<DT><STRONG>Component Object</STRONG></DT>
+<DD>an object through which all the functionality
+of a component can be accessed, including its other objects. This
+object may have many interfaces.
+
+</DD>
+<DT><STRONG>Application Object</STRONG></DT>
+<DD>A component object with a interface that
+comprises all the top-level functionality of a component; the client
+does not need to use other interfaces of the component object. This
+concept simplifies the understanding of a component, as it puts all
+its functionalities in an hierarchical manner (an application object
+together with its sub-objects, which can only be accessed through
+methods and properties of the application object).
+
+</DD>
+<DT><STRONG>COM server</STRONG></DT>
+<DD>Some piece of code that implements one or more
+component objects. A COM server must tell the other applications and
+components which component objects it makes available. It does so
+<I>exposing</I> them.
+
+</DD>
+<DT><STRONG>CoClass</STRONG></DT>
+<DD>A type library describing a component should have a
+CoClass entry, specifying some information about the component:
+
+<UL>
+<LI>a name, differentiating one CoClass from others in the same
+  type library;
+
+</LI>
+<LI>its CLSID, the unique identifier that distinguishes this
+  component from all others;
+
+</LI>
+<LI>the interfaces of the component object, telling which one is
+  the default. In a typical situation, only one interface will be
+  supplied; thus the component object could be called an Application
+  object for that component;
+
+</LI>
+<LI>the source interface, that is, the interface the component
+  uses to send events to the client. This interface is not implemented
+  by the component: it just <I>uses</I> objects that implement this
+  interface.
+
+</LI>
+</UL>
+
+</DD>
+<DT><STRONG>Lua Application Object</STRONG></DT>
+<DD>It's the Lua table used to implement
+the Application Object.
+
+</DD>
+</DL>
+<H1><A NAME="SECTION00540000000000000000">
+4.4 Building a LuaCOM COM server</A>
+</H1>
+
+There are some steps to build a COM server using LuaCOM:
+
+<OL>
+<LI>specify the component;
+</LI>
+<LI>identify what is going to be exported: Lua application object
+and its sub-objects;
+</LI>
+<LI>build a type library for the component;
+</LI>
+<LI>define the registration information for the component;
+</LI>
+<LI>register the Component object;
+</LI>
+<LI>implement and expose the COM objects;
+</LI>
+<LI>add COM initialization and termination code.
+</LI>
+</OL>
+<H2><A NAME="SECTION00541000000000000000">
+4.4.1 Specify the component</A>
+</H2>
+
+This is the first step: to define what functionality the component
+will expose. This functionality is represented by an hierarchy of
+objects, rooted in the Application object. Each of these objects
+should implement an interface.
+
+<H4><A NAME="SECTION00541010000000000000">
+4.4.1.0.1 Example</A>
+</H4> Suppose we have a Lua library that implements the
+access of databases contained in a specific DBMS. This library has
+three types of objects: databases, queries and records. In COM world,
+this could be represented by an Application object that opens
+databases and returns a Database Object. A Database object has, among
+others, a Query method. This method receives a SQL statement and
+returns a Query object. The Query object is a collection, which can be
+iterated using the parameterized property Records, which returns an
+object of type Record.
+
+<H2><A NAME="SECTION00542000000000000000">
+4.4.2 Objects to be exported</A>
+</H2>
+
+The objects to be exported are those belonging to the hierarchy rooted
+in the Application object. In Lua world, objects are ordinarily
+represented as tables or userdatas. So it's necessary to identify (or
+to implement) the Lua tables used to implement the objects to be
+exported.
+
+<H2><A NAME="SECTION00543000000000000000">
+4.4.3 Building the type library</A>
+</H2>
+
+The type library should contain entries for all the interfaces of
+exported objects and an entry for the CoClass, specifying the
+interface of the Application object and the interface used to send
+events.
+
+The most common way to build a type library is to write an IDL
+describing the type library and them use an IDL compiler, such as
+Microsoft's&#169; MIDL. Notice that all the interfaces must be
+dispinterfaces, that is, must inherit from <TT>IDispatch</TT>, and must have
+the flag <TT>oleautomation</TT>.
+
+<H2><A NAME="SECTION00544000000000000000">
+4.4.4 Registration Information</A>
+</H2>
+
+Here we must specify the information that is used by COM to locate the
+component. See documentation of <code>RegisterObject</code>.
+
+<H2><A NAME="SECTION00545000000000000000">
+4.4.5 Registering the Component Object</A>
+</H2>
+
+Before being accessed by other applications, the component object must
+be registered in the system registry. This can be done with the
+method <code>RegisterObject</code>. This task can be simplified
+using the function <code>luacom_detectAutomation</code>; using this function
+the registration of the component can be done just running the server
+with the <TT>/Register</TT> command-line switch.
+
+<H2><A NAME="SECTION00546000000000000000">
+4.4.6 Implementing and Exposing the Component</A>
+</H2>
+Here we're dealing with COM objects implemented in Lua. Typically the
+COM server will call a Lua function (like <TT>StartAutomation</TT>) to
+do this task.
+
+There are two different situations, which one demands different
+actions:
+
+<DL>
+<DT><STRONG>Implementing the Application Object</STRONG></DT>
+<DD>Here we must use the
+LuaCOM method <code>NewObject</code> to create a COM object and
+bind it to the table of the Lua Application Object. Them this object must
+be made available to other applications through <code>ExposeObject</code>.
+
+</DD>
+<DT><STRONG>Implementing other objects</STRONG></DT>
+<DD>The other objects of the component
+are obtained via the Lua Application Object as return values of
+functions or as values stored in the fields of the Lua Application
+Object (that is, via property access). These object should be
+implemented using <code>ImplInterface</code>. They can be implemented
+in the initialization (and then be stored somewhere) or can be
+implemented on-demand (that is, each time a COM object should be
+return, a call to <code>ImplInterface</code> is made).
+</DD>
+</DL>
+
+Notice that the fields of the Lua table used to implement COM
+component will only be accessible if they are present in the type
+library. If not, they are invisible to COM.
+
+<H2><A NAME="SECTION00547000000000000000">
+4.4.7 Initialization and Termination</A>
+</H2>
+
+<H3><A NAME="SECTION00547100000000000000">
+Initialization</A>
+</H3>
+The COM server must call the COM initialization functions
+(<TT>OleInitialize</TT> or <TT>CoInitialize</TT>) before LuaCOM is
+started. Other initialization task is the implementation and
+exposition of the COM objects. This task can be greatly simplified
+using the C/C++ LuaCOM API function <code>luacom_detectAutomation</code>.
+
+<H3><A NAME="SECTION00547200000000000000">
+Termination</A>
+</H3>
+The COM server must call (in Lua) <code>RevokeObject</code> for each
+exposed object. Then it must call the COM termination functions AFTER
+<code>lua_close</code> has been called; otherwise fatal errors may occur.
+
+<H1><A NAME="SECTION00550000000000000000">
+4.5 Running the COM server</A>
+</H1>
+
+A COM server built following the preceding guidelines can be used
+as any other COM object, that is, using <code>CoCreateInstance</code>,
+<code>CreateObject</code> or something like these.
+
+<H1><A NAME="SECTION00560000000000000000">
+4.6 Generating Events</A>
+</H1>
+
+The method <code>NewObject</code> returns a connection point container
+object. This object allows the component to send events to its clients
+just calling methods on this object, passing the expected
+parameters. Return values are not allowed yet. Example:
+
+<PRE>
+-- Initializes server
+function StartAutomation()
+
+  -- creates and exposes COM proxy application object
+  COMAppObject, events = luacom.NewObject(implementation_table, "My.Application")
+      
+  cookie = luacom_ExposeObject(COMAppObject)
+end
+
+function application:ReDraw()
+
+  -- redraws the window
+  application:UpdateScreen()
+
+  -- Notifies client using the connection point container object
+  events:redraw()
+end
+</PRE>
+<H1><A NAME="SECTION00600000000000000000"></A>
+<A NAME="chap:release"></A>
+<BR>
+5. Release Information
+</H1>
+
+Here is provided miscellaneous information specific to the current
+version of LuaCOM. Here are recorded the current limitations of
+LuaCOM, its known bugs, the history of modifications since the former
+version, technical details etc.
+
+<H1><A NAME="SECTION00610000000000000000"></A>
+<A NAME="sect:limitations"></A>
+<BR>
+5.1 Limitations
+</H1>
+
+Here are listed the current limitations of LuaCOM, as of the current
+version, and information about future relaxation of this restrictions.
+
+<UL>
+<LI>LuaCOM currently supports only exposes COM objects as ``single
+use'' objects. That might be circumvented by exposing many times the
+same object. This restriction might be removed under request;
+
+</LI>
+<LI>the implementation of DLL server via LuaCOM isn't supported;
+this may be implemented in the next release;
+
+</LI>
+<LI>there is no ``<code>UnRegisterObject</code>'' method
+yet. Objects registered with <code>RegisterObject</code> must be
+removed from the registry manually (or using another tool); this is
+due to the next release;
+
+</LI>
+<LI>LuaCOM doesn't support COM methods with variable number of
+parameters. This could be circumvented passing the optional parameters
+inside a table, but this hasn't been tested. This may be implemented
+under request;
+
+</LI>
+<LI>there isn't support for converting tables that are not
+``array-like''. This may be relaxed in a future version, depending on
+the feasibility;
+
+</LI>
+<LI>LuaCOM only allows one connection point for each ActiveX
+object. This limitation may be relaxed in future versions;
+
+</LI>
+<LI>LuaCOM doesn't provide access to COM interfaces that doesn't
+inherit from <TT>IDispatch</TT> interface. That is, only Automation Objects
+are supported. This restriction is due to the late-binding feature
+provided by LuaCOM. It's possible to provide access to these COM
+interfaces via a "proxy" Automation Object, which translate calls made
+through automation to vtable (early-binding) calls. It's also possible
+to implement this "proxy" directly using LuaCOM C/C++ API, but this
+hasn't been tested nor tried;
+
+</LI>
+</UL>
+<H1><A NAME="SECTION00620000000000000000"></A>
+<A NAME="sect:bugs"></A>
+<BR>
+5.2 Known bugs
+</H1>
+Here are recorded the known bugs present in LuaCOM. If any other bugs
+are found, please report them through LuaCOM's home page.
+
+<UL>
+<LI>LuaCOM only implements late-bound interfaces, but accepts a
+QueryInterface for early-bound ones. This erroneous behavior is due
+to the way a VB client sends events to the server. See subsection
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:visu-basicc-issue">5.4.5</A>;
+
+</LI>
+<LI>when a table of LuaCOM objects (that is, a SAFEARRAY of
+<TT>IDispatch</TT> pointers) is passed as a parameter to a COM object, these
+LuaCOM objects might not be disposed automatically and may leak;
+
+</LI>
+<LI>when a COM object implemented in Lua is called from VBScript,
+the ``in-out'' parameters of type SAFEARRAY cannot be modified. If
+they are, VBScript will complain with a COM error.
+
+</LI>
+</UL>
+<H1><A NAME="SECTION00630000000000000000"></A>
+<A NAME="sect:enhancements"></A>
+<BR>
+5.3 Future Enhancements
+</H1>
+
+Besides the enhancements listed in the sections <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sect:limitations">5.1</A> and
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sect:bugs">5.2</A>, there are other planned enhancements:
+
+<UL>
+<LI>to improve the overall performance of LuaCOM;
+</LI>
+<LI>type-conversion ``metamethod'', allowing the customization of
+the type conversion mechanism;
+</LI>
+<LI>dynamic creation of type libraries;
+</LI>
+<LI>better support for creating full-fledged COM objects using Lua.
+</LI>
+</UL>
+<H1><A NAME="SECTION00640000000000000000">
+5.4 Important issues about LuaCOM</A>
+</H1>
+
+LuaCOM is very similar to using other Automation-enabled languages
+or environments (Visual Basic&#169;, VBA, VBScript&#169;,
+pycom etc). Nevertheless, there are some subtle differences that might
+confuse the programmer: different syntax, unexpected behavior etc. To
+ease the task of the LuaCOM user, we grouped the information related
+to these isses here.
+
+<H2><A NAME="SECTION00641000000000000000">
+5.4.1 Problems instantiating COM objects</A>
+</H2>
+Some COM objects can rest at in-process servers (implemented in DLL's)
+and at local servers (implemented as separeted processes). COM gives
+preference to in-process servers, as they are faster. Nevertheless,
+some applications may not work with LuaCOM when working as
+in-process servers. One should instance the COM object supplying an
+additional flag forcing the use of local servers. See documentation
+for API function <TT>CreateObject</TT>.
+
+<H2><A NAME="SECTION00642000000000000000">
+5.4.2 Releasing COM objects from memory</A>
+</H2>
+In a normal scenario, an out-of-process COM server should terminate
+when all references to its objects are released. This may be
+importart, as the creation of new instances might depend on the
+absence of a running one. LuaCOM integrates the standard COM
+mechanism of reference counting with Lua's garbage collection. This
+works fine in most situations, but there are some situations which
+demand a more careful analysis:
+
+<UL>
+<LI>to <I>immediately</I> terminate the server process, it's
+necessary to eliminate all references in Lua to the COM objects
+residing in this process and then force a garbage-collection cycle;
+</LI>
+<LI>sometimes a reference to a COM object may be stored by mistake
+to a global variable and then forgot there. This may prevent the
+server process to exit even when a method like ``Quit'' is called. To
+avoid this problem, one might group all to references to a COM object
+and its sub-objects in a single table to avoid ``lost'' references.
+</LI>
+</UL>
+
+For more information, see section <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:object-disposal">3.2.1</A>.
+
+<H2><A NAME="SECTION00643000000000000000">
+5.4.3 Receiving events</A>
+</H2>
+When one wishes to receive events and notifications from a COM object,
+a connection must be established using connection points. But that is
+not enough: the client application must have a message loop running to
+get these notifications. For more information, see section
+<A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:conn-points:-handl">3.3.3</A>.
+
+<H2><A NAME="SECTION00644000000000000000">
+5.4.4 Extensible Interfaces</A>
+</H2>
+
+Some objects that have type information describing their interface
+(methods, properties, types of parameters etc), may add new methods
+and properties at runtime. This means that these methods and
+properties can only be accessed using the same mechanism LuaCOM uses
+for Generic COM object. This have some implications:
+
+<UL>
+<LI>when accessing properties, it's mandatory to access them as
+methods and to use the <TT>set</TT> prefix to alter their values. If an
+object <TT>foo</TT> has a property <TT>color</TT> not present in the
+type information, it can only be accessed through <TT>foo:color()</TT>
+(read access) or <TT>foo:setcolor()</TT> (write access);
+
+</LI>
+<LI>when calling methods, all parameters are treated as in-out. This
+means that, beyond the return value, a call to a method of this type
+will return all the parameters back, whether or not modified by the
+callee. Anyway, one can ignore these values simply not assigning them
+to a variable, e.g. <TT>x = foo:method(a,b)</TT> will ignore the values
+of <TT>a</TT> and <TT>b</TT>, also returned by the call.
+
+</LI>
+</UL>
+
+COM objects related to WMI have this behavior. For more information,
+see section <A HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#sec:extens-interf">4</A>.
+
+<H2><A NAME="SECTION00645000000000000000"></A>
+<A NAME="sec:visu-basicc-issue"></A>
+<BR>
+5.4.5 Visual Basic&#169; issue
+</H2>
+A COM server implemented with LuaCOM can be used in VB with no
+trouble:
+
+<PRE>
+Public lc as Object
+
+Set lc = CreateObject("MyCOMObject.InLuaCOM")
+
+lc.showWindow
+
+b = lc.getData(3)
+
+lc.Quit
+</PRE>
+
+But if one wants to received events generated by a COM object
+implemented using LuaCOM, then it's necessary to use VB's
+<code>Public WithEvents</code>:
+
+<PRE>
+Public WithEvents obj as MyCOMObject.Application
+
+Set obj = CreateObject("MyCOMObject.Application")
+
+Private Sub obj_genericEvent()
+  ' Put your event code here
+End Sub
+</PRE>
+
+Here there is a problem: when VB assigns the result of
+<code>CreateObject</code> to <code>obj</code> variable, it tries to get an early
+bound interface (as far as I know, VB only uses late-bound interfaces
+with variables of type <code>Object</code>). LuaCOM does not work with
+early-bound interfaces (known as vtable). If you call any method using
+the <code>obj</code> variable, VB will throw an exception.
+
+The solution we adopted was to accept a QueryInterface for a
+early-bound interface (thus allowing the use of <TT>Public
+WithEvents</TT>). Then the client <I>must</I> do a ``typecast'' to use
+correctly the COM object:
+
+<PRE>
+Public WithEvents obj_dummy as MyCOMObject.Application
+Public obj as Object
+
+Set obj_dummy = CreateObject("MyCOMObject.Application")
+Set obj = obj_dummy
+</PRE>
+
+This way the client may call methods of the COM object using the
+<TT>obj</TT> variable.
+
+<H1><A NAME="SECTION00650000000000000000">
+5.5 History</A>
+</H1>
+
+<H2><A NAME="SECTION00651000000000000000">
+Version 1.2</A>
+</H2>
+
+<UL>
+<LI>Now 1-based arrays are correctly converted by LuaCOM;
+
+</LI>
+<LI>UNICODE strings are correctly converted from/to ANSI ones by
+LuaCOM;
+
+</LI>
+<LI>byte arrays are now converted from/to strings with embedded zeros;
+
+</LI>
+<LI>LuaCOM now has a limited support for loading and browsing type
+information and type libraries. This includes the ability to import
+type library constants (<TT>enum</TT>'s) as Lua globals and the ability
+to open the help information associated with a component;
+
+</LI>
+<LI>objects implementing <TT>IEnumVARIANT</TT> interface are now
+supported. This means that collections can be used in LuaCOM in a
+similar way as the are in VBScript&#169;;
+
+</LI>
+<LI>implemented a log mechanism to simplify debugging;
+
+</LI>
+<LI>LuaCOM now handles correctly COM calls with named
+parameters<A NAME="tex2html6"
+  HREF="#foot437"><SUP>5.1</SUP></A>. This caused problems when receiving Microsoft
+Excel&#169; events;
+
+</LI>
+<LI>now it's possible to specify the context used to create an
+instance of a COM object (whether it should be created as a local
+server or as an in-process server);
+
+</LI>
+<LI>non-ANSI code removed;
+
+</LI>
+<LI>when faced with an <TT>IUnknown</TT> pointer, LuaCOM now
+queries it for <TT>IDispatch</TT> or <TT>IEnumVARIANT</TT> interfaces,
+returning a LuaCOM object instead of an <TT>IUnknown</TT> pointer;
+
+</LI>
+<LI>improved error-handling: now LuaCOM allows the customization
+of the actions to be taken when errors occur;
+
+</LI>
+<LI>LuaCOM now supports the concept of default method: when one
+uses a reference to a LuaCOM object as a function, LuaCOM does the
+function call using the default method of that object;
+
+</LI>
+<LI>part of the LuaAPI of LuaCOM now is going to be implemented
+in Lua 5. This is going to ease the addition of new features and avoid
+cramming the library. Nevertheless, this will not impact those who use
+the binary release, as they carry the Lua code precompiled;
+
+</LI>
+<LI><TT>luacom.GetObject</TT> now supports the use of monikers. Among
+other thing, this makes possible to use WMI and to open document files
+directly, e.g. <code>luacom.GetObject("myfile.xls")</code>;
+
+</LI>
+<LI><TT>luacom.CreateObject</TT> and <TT>luacom.GetObject</TT> now
+make an attemp to initialize the COM object via
+IPersistStreamInit. Some objects refuse to work without this step.
+
+</LI>
+</UL>
+<H2><A NAME="SECTION00652000000000000000">
+Version 1.1</A>
+</H2>
+
+<UL>
+<LI>LuaCOM is now compatible with Lua 4 and Lua 5. It's just a
+matter of linking with the right library;
+
+</LI>
+<LI>when used with Lua 5, LuaCOM uses booleans to better match the
+Automation types;
+
+</LI>
+<LI>all functions of LuaCOM's Lua API are now grouped together in a
+single table called <code>luacom</code>, although they are still accessible
+globally as <TT>luacom_&lt;function&gt;</TT> in the Lua 4 version of the
+library;
+
+</LI>
+<LI>now it's possible to create instances of Microsoft&#169;
+Office&#169; applications (Excel&#169;, Powerpoint&#169;
+etc.). It was only possible to use them via GetObject; now you can
+create a new instance of these applications using
+<TT>luacom.CreateObject</TT>;
+
+</LI>
+<LI>when compiled with the <TT>NDEBUG</TT> flag, LuaCOM does not
+use any kind of terminal output anymore (<TT>printf</TT>,
+<TT>cout</TT> etc). This could break some applications.
+
+</LI>
+</UL>
+<H2><A NAME="SECTION00653000000000000000">
+Version 1.0</A>
+</H2>
+
+<UL>
+<LI>property access modified: now parameterized properties must be
+accessed as functions using a prefix to differentiate property read
+and write. If the prefix is omitted, a property get is assumed;
+
+</LI>
+<LI>syntax ``<code>obj.Property(param)</code>'' is no longer supported. A
+colon - ``:'' - must be used: ``<code>obj:Property(param)</code>'';
+
+</LI>
+<LI>better support for implementation of COM objects, including
+registration and event generation;
+
+</LI>
+<LI>Type conversion engine rewritten. Now it adheres more firmly to
+the types specified in the type libraries;
+
+</LI>
+<LI>binding rewritten to better support ``out'' and ``in-out''
+parameters and to adhere more strictly to the recommended memory
+allocation policies for COM;
+
+</LI>
+<LI>COM objects without type information are now supported.
+</LI>
+</UL>
+<H2><A NAME="SECTION00654000000000000000">
+Version 0.9.2</A>
+</H2>
+
+<UL>
+<LI>removal of <TT>LUACOM_TRUE</TT> and <TT>LUACOM_FALSE</TT>
+constants; now booleans follow the same convention of the C language;
+</LI>
+<LI>memory and interface leaks fixed;
+</LI>
+<LI>some functions of the API have slightly different names;
+</LI>
+<LI>changes in memory allocation policy, to follow more strictly
+practices recommended in COM documentation;
+</LI>
+<LI>parameter passing policies changed;
+</LI>
+<LI>added limited support for <TT>IUnknown</TT> pointers;
+</LI>
+<LI>changes in type conversion;
+</LI>
+<LI>added limited support for implementing and registering COM
+objects in Lua
+</LI>
+</UL>
+<H2><A NAME="SECTION00655000000000000000">
+Version 0.9.1</A>
+</H2>
+
+<UL>
+<LI>conversion to Lua 4;
+</LI>
+<LI>better handling of different kinds of type information (e.g. now
+can access Microsoft Internet Explorer&#169; object);
+</LI>
+<LI>now handles more gracefully exceptions and errors;
+</LI>
+<LI>added support for optional parameters with default values;
+</LI>
+<LI>LuaCOM does not initializes COM libraries anymore; this is
+left to the user;
+</LI>
+<LI>more stringent behavior about the syntax of method calls and
+property access (methods with ``:'' and properties with ``.'').
+</LI>
+</UL>
+<H1><A NAME="SECTION00700000000000000000"></A>
+<A NAME="chap:reference"></A>
+<BR>
+6. Reference
+</H1>
+
+<H1><A NAME="SECTION00710000000000000000">
+6.1 The C/C++ API</A>
+</H1>
+
+<H2><A NAME="SECTION00711000000000000000">
+luacom_open</A>
+</H2>
+
+<H3><A NAME="SECTION00711100000000000000">
+Prototype</A>
+</H3>
+
+<PRE>
+  void luacom_open(lua_State* L);
+</PRE>
+<H3><A NAME="SECTION00711200000000000000">
+Description</A>
+</H3>
+This function initializes the LuaCOM library, creates the global
+<code>luacom</code> table and fills it with LuaCOM methods in the given
+Lua state. Notice that it's necessary to initialize COM before,
+using <TT>OleInitialize</TT> or <TT>CoInitialize</TT> or something like
+that.
+
+<H3><A NAME="SECTION00711300000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+int main()
+{
+  lua_State *L = lua_open(0);
+
+  OleInitialize(NULL);
+
+  luacom_open(L);
+
+  .
+  .
+  .
+}
+</PRE>
+<H2><A NAME="SECTION00712000000000000000">
+luacom_close</A>
+</H2>
+
+<H3><A NAME="SECTION00712100000000000000">
+Prototype</A>
+</H3>
+
+<PRE>
+  void luacom_close(lua_State* L);
+</PRE>
+<H3><A NAME="SECTION00712200000000000000">
+Description</A>
+</H3>
+This function is intended to clean up the data structures associated
+with LuaCOM in a specific Lua state (<TT>L</TT>). Currently, it does nothing,
+but in future releases it will do. So, do not remove from your code!
+It must be also called before the COM termination functions
+(<TT>OleUninitialize</TT> and <TT>CoInitialize</TT>) and before
+<TT>lua_close</TT>.
+
+<H3><A NAME="SECTION00712300000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+int main()
+{
+  lua_State *L = lua_open(0);
+
+  OleInitialize(NULL);
+
+  luacom_open(L);
+
+  .
+  .
+  .
+
+  luacom_close(L);
+
+  lua_close(L);
+
+  OleUninitialize();
+}
+</PRE>
+<H2><A NAME="SECTION00713000000000000000">
+luacom_detectAutomation</A>
+</H2>
+
+<H3><A NAME="SECTION00713100000000000000">
+Prototype</A>
+</H3>
+
+<PRE>
+  int luacom_detectAutomation(lua_State *L, int argc, char *argv[]);
+</PRE>
+<H3><A NAME="SECTION00713200000000000000">
+Description</A>
+</H3>
+This function gets from the top of the Lua stack a table which should
+hold two fields named ``StartAutomation'' and ``Register'' (these
+fields should contain functions that implement these actions). Then it
+searches the command line (provided <TT>argc</TT> and <TT>argv</TT>)
+for the switches ``/Automation'' or ``/Register''. If one of these
+switches is found, it then calls the corresponding function in the Lua
+table. Finally it returns a value telling what happened, so the caller
+function may change its course of action (if needed).
+
+This function is simply a helper for those implementing Automation
+servers using LuaCOM. Most of the work should be done by the Lua
+code, using the methods <code>RegisterObject</code>,
+<code>NewObject</code>, and <code>ExposeObject</code>.
+
+<H3><A NAME="SECTION00713300000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+/*
+ * com_object.cpp
+ *
+ * This sample C++ code initializes the libraries and
+ * the COM engine to export a COM object implemented in Lua
+ */
+
+#include &lt;ole2.h&gt;
+
+// libraries
+extern "C"
+{
+#include &lt;lua.h&gt;
+#include &lt;lualib.h&gt;
+}
+
+#include &lt;luacom.h&gt;
+
+
+
+int main (int argc, char *argv[])
+{
+  int a = 0;
+
+  CoInitialize(NULL);
+
+  IupOpen();
+
+  lua_State *L = lua_open(0);
+
+  lua_baselibopen (L);
+  lua_strlibopen(L);
+  lua_iolibopen(L);
+
+  luacom_open(L);
+
+  lua_dofile(L, "implementation.lua");
+
+  // Pushes the table containing the functions
+  // responsible for the initialization of the
+  // COM object
+
+  lua_getglobal(L, "COM");
+
+  // detects whether the program was invoked for Automation,
+  // registration or none of that
+
+  int result = luacom_detectAutomation(L, argc, argv);
+
+  switch(result)
+  {
+  case LUACOM_AUTOMATION:
+    // runs the message loop, as all the needed initialization
+    // has already been performed
+    MessageLoop();
+    break;
+
+  case LUACOM_NOAUTOMATION:
+    // This only works as a COM server
+    printf("Error. This is a COM server\n");
+    break;
+
+  case LUACOM_REGISTER:
+    // Notifies that the COM object has been
+    // registered
+    printf("COM object successfully registered.");
+    break;
+
+  case LUACOM_AUTOMATION_ERROR:
+    // detectAutomation found /Automation or /Register but
+    // the initialization Lua functions returned some error
+    printf("Error starting Automation");
+    break;
+  }
+
+  luacom_close(L);
+  lua_close(L);
+
+  CoUninitialize();
+
+  return 0;
+}
+
+-------
+
+-- implementation.lua
+--
+--   This is a sample implementation of a COM server in Lua
+--
+
+-- This is the implementation of the COM object
+TestObj = {}
+
+function TestObj:showWindow()
+  dialog.show()
+end
+
+function TestObj:hideWindow()
+  dialog.hide()
+end
+
+
+
+-- Here we create and populate the table to
+-- be used with detectAutomation
+
+COM = {}
+
+
+-- This functions creates the COM object to be
+-- exported and exposes it.
+function COM:StartAutomation()
+
+  -- creates the object using its default interface
+
+  COMAppObject, events, e = luacom.NewObject(TestObj, "TESTE.Teste")
+
+
+  -- This error will be caught by detectAutomation      
+  if COMAppObject == nil then
+     error("NewObject failed: "..e)
+  end
+   
+  -- Exposes the object
+  cookie = luacom.ExposeObject(COMAppObject)
+  if cookie == nil then
+     error("ExposeObject failed!")
+  end
+  
+end
+
+
+
+function COM:Register()
+
+  -- fills table with registration information
+  local reginfo = {}  
+  reginfo.VersionIndependentProgID = "TESTE.Teste"
+  reginfo.ProgID = reginfo.VersionIndependentProgID..".1"
+  reginfo.TypeLib = "teste.tlb"
+  reginfo.CoClass = "Teste"
+  reginfo.ComponentName = "Test Component"
+  reginfo.Arguments = "/Automation"
+
+  -- stores component information in the registry
+  local res = luacom.RegisterObject(reginfo)
+  if res == nil then
+     error("RegisterObject failed!")
+  end
+end
+</PRE>
+<H2><A NAME="SECTION00714000000000000000">
+luacom_IDispatch2LuaCOM</A>
+</H2>
+
+<H3><A NAME="SECTION00714100000000000000">
+Prototype</A>
+</H3>
+
+<PRE>
+  int luacom_IDispatch2LuaCOM(lua_State *L, void *pdisp_arg);
+</PRE>
+<H3><A NAME="SECTION00714200000000000000">
+Description</A>
+</H3>
+This functions takes a pointer to <TT>IDispatch</TT>, creates a
+LuaCOM object for it and pushes it in the Lua stack. This function
+is useful when one gets an interface for a COM object from
+<TT>C/C++</TT> code and wants to use it in Lua.
+
+<H3><A NAME="SECTION00714300000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+void CreateAndExport(lua_State* L)
+{
+  // Creates the object
+  IUnknown *obj = CreateObj();
+
+  // Gets the IDispatch
+  IDispatch* pdisp = NULL;
+  QueryInterface(IID_IDISPATCH, &amp;pdisp);
+
+  // pushes onto lua stack
+  luacom_IDispatch2LuaCOM(L, (void *) pdisp);
+}
+</PRE>
+<H1><A NAME="SECTION00720000000000000000">
+6.2 The Lua Standard API</A>
+</H1>
+
+<H2><A NAME="SECTION00721000000000000000">
+CreateObject</A>
+</H2>
+
+<H3><A NAME="SECTION00721100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+luacom_obj = luacom.CreateObject(ID, creation_context, untyped)
+</PRE>
+<H3><A NAME="SECTION00721200000000000000">
+Description</A>
+</H3>
+This method finds the Class ID referenced by the ID parameter
+and creates an instance of the object with this Class ID. If there
+is any problem (ProgID not found, error instantiating object), the
+method returns nil.
+
+<H3><A NAME="SECTION00721300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">ProgID</TD>
+<TD ALIGN="CENTER">String</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00721400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00721500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+inet_obj = luacom.CreateObject("InetCtls.Inet")
+
+if inet_obj == nil then
+  print("Error! Object could not be created!")
+end
+</PRE>
+<H2><A NAME="SECTION00722000000000000000">
+Connect</A>
+</H2>
+
+<H3><A NAME="SECTION00722100000000000000">
+Use</A>
+</H3>
+
+  <PRE>
+  implemented_obj = luacom.Connect(luacom_obj, implementation_table)
+</PRE>
+<H3><A NAME="SECTION00722200000000000000">
+Description</A>
+</H3>
+  This method finds the default source interface of the object
+  <code>luacom_obj</code>, creates an instance of this interface whose
+  implementation is given by <code>implementation_table</code> and creates a
+  connection point between the <code>luacom_obj</code> and the implemented
+  source interface. Any calls made by the <code>luacom_obj</code> to the
+  source interface implementation will be translated to Lua calls to
+  member function present in the <code>implementation_table</code>. If the
+  method succeeds, the LuaCOM object implemented by
+  <code>implementation_table</code> is returned; otherwise, <code>nil</code> is
+  returned.
+
+  Notice that, to receive events, it's necessary to have a Windows
+  message loop.
+
+<H3><A NAME="SECTION00722300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type    </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER"><code>luacom_obj</code></TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>implementation_table</code></TD>
+<TD ALIGN="CENTER">Table or userdata</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00722400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">implemented_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00722500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+events_handler = {}
+
+function events_handler:NewValue(new_value)
+  print(new_value)
+end
+
+events_obj = luacom.Connect(luacom_obj, events_handler)
+</PRE>
+<H2><A NAME="SECTION00723000000000000000">
+ImplInterface</A>
+</H2>
+
+<H3><A NAME="SECTION00723100000000000000">
+Use</A>
+</H3>
+
+  <PRE>
+  implemented_obj = luacom.ImplInterface(impl_table, ProgID, interface_name)
+</PRE>
+<H3><A NAME="SECTION00723200000000000000">
+Description</A>
+</H3>
+This method finds the type library associated with the ProgID and
+tries to find the type information of an interface called
+``interface_name''. If it does, then creates an object whose
+implementation is ``impl_table'', that is, any method call or property
+access on this object is translated to calls or access on the members
+of the table. Then it makes a LuaCOM object for the implemented
+interface and returns it. If there are any problems in the process
+(ProgID not found, interface not found, interface isn't a
+<TT>dispinterface</TT>), the method returns nil.
+
+<H3><A NAME="SECTION00723300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type    </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER"><code>impl_table</code></TD>
+<TD ALIGN="CENTER">table or userdata</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ProgID</code></TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>interface_name</code></TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00723400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">implemented_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00723500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+myobject = {}
+
+function myobject:MyMethod()
+  print("My method!")
+end
+
+myobject.Property = "teste"
+
+luacom_obj = luacom.ImplInterface(myobject, "TEST.Test", "ITest")
+
+-- these are done via Lua
+myobject:MyMethod()
+print(myobject.Property)
+
+-- this call is done through COM
+luacom_obj:MyMethod()
+print(luacom_obj.Property)
+</PRE>
+<H2><A NAME="SECTION00724000000000000000">
+ImplInterfaceFromTypelib</A>
+</H2>
+
+<H3><A NAME="SECTION00724100000000000000">
+Use</A>
+</H3>
+
+<PRE> 
+impl_obj = luacom.ImplInterfaceFromTypelib(
+  impl_table, 
+  typelib_path,
+  interface_name,
+  coclass_name)
+</PRE>
+<H3><A NAME="SECTION00724200000000000000">
+Description</A>
+</H3>
+This method loads the type library whose file path is
+``typelib_path'' and tries to find the type information of an
+interface called ``interface_name''. If it does, then creates an
+object whose implementation is ``impl_table'', that is, any method
+call or property access on this object is translated to calls or
+access on the members of the table. Then it makes a LuaCOM object
+for the implemented interface and returns it. If there are any
+problems in the process (ProgID not found, interface not found,
+interface isn't a <TT>dispinterface</TT>), the method returns nil. The
+``coclass_name'' parameter is optional; it is only needed if the
+resulting LuaCOM object is to be passed to the methods
+<code>Connect</code>, <code>AddConnection</code> or
+<code>ExposeObject</code>. This parameter specifies the Component
+Object class name to which the interface belongs, as one interface may
+be used in more than one ``coclass''.
+
+<H3><A NAME="SECTION00724300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type    </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER"><code>impl_table</code></TD>
+<TD ALIGN="CENTER">table or userdata</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>typelib_path</code></TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>interface_name</code></TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>coclass_name</code></TD>
+<TD ALIGN="CENTER">(optional) string</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00724400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">implemented_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00724500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+myobject = {}
+
+function myobject:MyMethod()
+  print("My method!")
+end
+
+myobject.Property = "teste"
+
+luacom_obj = luacom.ImplInterfaceFromTypelib(myobject, "test.tlb",
+"ITest", "Test")
+
+-- these are done via Lua
+myobject:MyMethod()
+print(myobject.Property)
+
+-- this call is done through COM
+luacom_obj:MyMethod()
+print(luacom_obj.Property)
+</PRE>
+<H2><A NAME="SECTION00725000000000000000">
+GetObject</A>
+</H2>
+
+<H3><A NAME="SECTION00725100000000000000">
+Use</A>
+</H3>
+<PRE>
+luacom_obj = luacom.GetObject(ProgID)
+luacom_obj = luacom.GetObject(moniker)
+</PRE>
+<H3><A NAME="SECTION00725200000000000000">
+Description</A>
+</H3>
+This method finds the Class ID referenced by the ProgID parameter
+and tries to find a running instance of the object having this Class
+ID. If there is any problem (ProgID not found, object is not running),
+the method returns nil.
+
+<H3><A NAME="SECTION00725300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">ProgID</TD>
+<TD ALIGN="CENTER">String</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00725400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00725500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+excel = luacom.GetObject("Excel.Application")
+
+if excel  == nil then
+  print("Error! Could not get object!")
+end
+</PRE>
+<H2><A NAME="SECTION00726000000000000000">
+NewObject</A>
+</H2>
+
+<H3><A NAME="SECTION00726100000000000000">
+Use</A>
+</H3>
+
+  <PRE>
+  implemented_obj, events_sink, errmsg = luacom.NewObject(impl_table, ProgID)
+</PRE>
+<H3><A NAME="SECTION00726200000000000000">
+Description</A>
+</H3>
+This method is analogous to <code>ImplInterface</code>, doing
+just a step further: it locates the default interface for the ProgID
+and uses its type information. That is, this method creates a Lua
+implementation of a COM object's default interface. This is useful
+when implementing a complete COM object in Lua. It also creates a
+connection point for sending events to the client application and
+returns it as the second return value. If there are any problems in
+the process (ProgID not found, default interface is not a
+<TT>dispinterface</TT> etc), the method returns nil twice and returns the
+error message as the third return value.
+
+To send events to the client application, just call methods of the
+event sink table returned. The method call will be translated to COM
+calls to each connection. These calls may contain parameters (as
+specified in the type information).
+
+<H3><A NAME="SECTION00726300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type    </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER"><code>impl_table</code></TD>
+<TD ALIGN="CENTER">table or userdata</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><code>ProgID</code></TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00726400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">implemented_obj</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>LuaCOM object
+<BR>
+nil</TD>
+</TR>
+<TR><TD ALIGN="CENTER">event_sink</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>event sink table
+<BR>
+nil</TD>
+</TR>
+<TR><TD ALIGN="CENTER">errmsg</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>error message in the case of failure
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00726500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+myobject = {}
+
+function myobject:MyMethod()
+  print("My method!")
+end
+
+myobject.Property = "teste"
+
+obj, evt, err = luacom.NewObject(myobject, "TEST.Test")
+
+-- these are done via Lua
+myobject:MyMethod()
+print(myobject.Property)
+
+-- this call is done through COM
+luacom_obj:MyMethod()
+print(luacom_obj.Property)
+
+-- here we sink events
+evt:Event1()
+</PRE>
+<H2><A NAME="SECTION00727000000000000000">
+ExposeObject</A>
+</H2>
+
+<H3><A NAME="SECTION00727100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+cookie = luacom.ExposeObject(luacom_obj)
+</PRE>
+<H3><A NAME="SECTION00727200000000000000">
+Description</A>
+</H3>
+This method creates and registers a <I>class factory</I> for
+<TT>luacom_obj</TT>, so that other running applications can use it. It
+returns a cookie that must be used to unregister the object. If the
+method fails, it returns <TT>nil</TT>.
+
+ATTENTION: the object MUST be unregistered (using
+<code>RevokeObject</code>) before calling <TT>luacom_close</TT> or
+<TT>lua_close</TT>, otherwise unhandled exceptions might occur.
+
+<H3><A NAME="SECTION00727300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00727400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">cookie</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>number
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00727500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+myobject = luacom.NewObject(impl_table, "Word.Application")
+
+cookie = luacom.ExposeObject(myobject)
+
+function end_of_application()
+  luacom.RevokeObject(cookie)
+end
+</PRE>
+<H2><A NAME="SECTION00728000000000000000">
+RegisterObject</A>
+</H2>
+
+<H3><A NAME="SECTION00728100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+result = luacom.RegisterObject(registration_info)
+</PRE>
+<H3><A NAME="SECTION00728200000000000000">
+Description</A>
+</H3>
+This method creates the necessary registry entries for a COM object,
+using the information in <TT>registration_info</TT> table. If the
+component is successfully registered, the method returns a non-nil
+value.
+
+The <TT>registration_info</TT> table must contain the following
+fields<A NAME="tex2html7"
+  HREF="#foot636"><SUP>6.1</SUP></A>:
+
+<DL>
+<DT><STRONG>VersionIndependentProgID</STRONG></DT>
+<DD>This field must contain a string
+describing the programmatic identifier for the component,
+e.g. ``MyCompany.MyApplication''.
+
+</DD>
+<DT><STRONG>ProgID</STRONG></DT>
+<DD>The same as VersionIndependentProgID but with a version
+number, e.g. ``MyCompany.MyApplication.2''.
+
+</DD>
+<DT><STRONG>TypeLib</STRONG></DT>
+<DD>The file name of the type library describing the
+component. This file name should contain a path, if the type library
+isn't in the same folder of the executable. Samples:
+<code>mytypelib.tlb</code>, <code>c:\app\test.tlb</code>, <code>test.exe\1</code> (this
+last one can be used when the type library is bound to the executable
+as a resource).
+
+</DD>
+<DT><STRONG>CoClass</STRONG></DT>
+<DD>The name of the component class. There must be a
+<TT>coclass</TT> entry in the type library with the same name or the
+registration will fail.
+
+</DD>
+<DT><STRONG>ComponentName</STRONG></DT>
+<DD>This is the human-readable name of the
+component.
+
+</DD>
+<DT><STRONG>Arguments</STRONG></DT>
+<DD>This field specifies what arguments will be supplied
+to the component executable when started via COM. Normally it should
+contain ``<TT>/Automation</TT>''.
+
+</DD>
+</DL>
+
+This method is not a generic ``registering tool'' for COM
+components, as it assumes the component to be registered is
+implemented by the running executable during registration.
+
+<H3><A NAME="SECTION00728300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">registration_info</TD>
+<TD ALIGN="CENTER">table with registration information</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00728400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">result</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113><TT>nil</TT> or non-<TT>nil</TT> value</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00728500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+-- Lua registration code
+
+function RegisterComponent()
+
+  reginfo.VersionIndependentProgID = "TESTE.Teste"
+
+  -- Adds version information
+  reginfo.ProgID = reginfo.VersionIndependentProgID..".1"
+
+  reginfo.TypeLib = "teste.tlb"
+  reginfo.CoClass = "Teste"
+  reginfo.ComponentName = "Test Component"
+  reginfo.Arguments = "/Automation"
+
+  local res = luacom.RegisterObject(reginfo)
+
+  return res
+
+end
+</PRE>
+<H2><A NAME="SECTION00729000000000000000">
+addConnection</A>
+</H2>
+
+<H3><A NAME="SECTION00729100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+result = luacom.addConnection(client, server)
+</PRE>
+<H3><A NAME="SECTION00729200000000000000">
+Description</A>
+</H3>
+This method connects two LuaCOM objects, setting the
+<TT>server</TT> as an event sink for the <TT>client</TT>, that is, the
+client will call methods of the server to notify events (following the
+COM model). This will only work if the <TT>client</TT> supports
+connection points of the <TT>server</TT>'s type. If the method
+succeeds, it returns 1; otherwise, it returns <TT>nil</TT>.
+
+<H3><A NAME="SECTION00729300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">client</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+<TR><TD ALIGN="CENTER">server</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00729400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">result</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>number
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00729500000000000000">
+Sample</A>
+</H3>
+<PRE>
+obj = luacom.CreateObject("TEST.Test")
+
+event_sink = {}
+
+function event_sink:KeyPress(keynumber)
+  print(keynumber)
+end
+
+event_obj = luacom.ImplInterface(
+              event_sink, "TEST.Test", "ITestEvents")
+
+result = luacom.addConnection(obj, event_obj)
+
+if result == nil then
+  print("Error!")
+  exit(1)
+end
+</PRE>
+<H2><A NAME="SECTION007210000000000000000">
+releaseConnection</A>
+</H2>
+
+<H3><A NAME="SECTION007210100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+luacom.releaseConnection(client)
+</PRE>
+<H3><A NAME="SECTION007210200000000000000">
+Description</A>
+</H3>
+This method disconnects a LuaCOM object from its event sink.
+
+<H3><A NAME="SECTION007210300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">client</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007210400000000000000">
+Return Values</A>
+</H3>
+There are none.
+
+<H3><A NAME="SECTION007210500000000000000">
+Sample</A>
+</H3>
+<PRE>
+obj = luacom.CreateObject("TEST.Test")
+
+event_sink = {}
+
+function event_sink:KeyPress(keynumber)
+  print(keynumber)
+end
+
+event_obj = luacom.ImplInterface(
+              event_sink, "TEST.Test", "ITestEvents")
+
+result = luacom.addConnection(obj, event_obj)
+
+if result == nil then
+  print("Error!")
+  exit(1)
+end
+
+.
+.
+.
+
+luacom.releaseConnection(obj)
+</PRE>
+<H2><A NAME="SECTION007211000000000000000">
+ProgIDfromCLSID</A>
+</H2>
+
+<H3><A NAME="SECTION007211100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+progID = luacom.ProgIDfromCLSID(clsid)
+</PRE>
+<H3><A NAME="SECTION007211200000000000000">
+Description</A>
+</H3>
+This method is a proxy for the Win32 function <TT>ProgIDFromCLSID</TT>.
+
+<H3><A NAME="SECTION007211300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">clsid</TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007211400000000000000">
+Return Values</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">progID</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>string
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007211500000000000000">
+Sample</A>
+</H3>
+<PRE>
+
+progid = luacom.ProgIDfromCLSID("{8E27C92B-1264-101C-8A2F-040224009C02}")
+obj = luacom.CreateObject(progid)
+</PRE>
+<H2><A NAME="SECTION007212000000000000000">
+CLSIDfromProgID</A>
+</H2>
+
+<H3><A NAME="SECTION007212100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+clsid = luacom.CLSIDfromProgID(progID)
+</PRE>
+<H3><A NAME="SECTION007212200000000000000">
+Description</A>
+</H3>
+It's the inverse of <code>ProgIDfromCLSID</code>.
+
+<H2><A NAME="SECTION007213000000000000000">
+ShowHelp</A>
+</H2>
+
+<H3><A NAME="SECTION007213100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+luacom.ShowHelp(luacom_obj)
+</PRE>
+<H3><A NAME="SECTION007213200000000000000">
+Description</A>
+</H3>
+This method tries to locate the <TT>luacom_obj</TT>'s help file in its
+type information and shows it.
+
+<H3><A NAME="SECTION007213300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007213400000000000000">
+Return Values</A>
+</H3>
+None.
+
+<H3><A NAME="SECTION007213500000000000000">
+Sample</A>
+</H3>
+<PRE>
+obj = luacom.CreateObject("TEST.Test")
+
+luacom.ShowHelp(obj)
+</PRE>
+<H2><A NAME="SECTION007214000000000000000">
+GetIUnknown</A>
+</H2>
+
+<H3><A NAME="SECTION007214100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+iunknown = luacom.GetIUnknown(luacom_obj)
+</PRE>
+<H3><A NAME="SECTION007214200000000000000">
+Description</A>
+</H3>
+This method returns a userdata holding the <TT>IUnknown</TT> interface
+pointer to the COM object behind <TT>luacom_obj</TT>. It's important
+to notice that Lua does not duplicates userdata: many calls to
+<code>GetIUnknown</code> for the same LuaCOM object will return
+the same userdata. This means that the reference count for the
+<TT>IUnknown</TT> interface will be incremented only once (that is, the
+first time the userdata is pushed) and will be decremented only when
+all the references to that userdata go out of scope (that is, when the
+userdata suffers garbage collection).
+
+One possible use for this method is to check whether two LuaCOM
+objects reference the same COM object.
+
+<H3><A NAME="SECTION007214300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007214400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">iunknown</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>userdata with IUnknown metatable
+<BR>
+nil</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007214500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+-- Creates two LuaCOM objects for the same COM object
+-- (a running instance of Microsoft Word(R)  )
+
+word1 = luacom.GetObject("Word.Application")
+word2 = luacom.GetObject("Word.Application")
+
+-- These two userdata should be the same
+unk1 = luacom.GetIUnknown(word1)
+unk2 = luacom.GetIUnknown(word2)
+
+assert(unk1 == unk2)
+</PRE>
+<H2><A NAME="SECTION007215000000000000000">
+isMember</A>
+</H2>
+
+<H3><A NAME="SECTION007215100000000000000">
+Use</A>
+</H3>
+
+<PRE>
+answer = luacom.isMember(luacom_obj, member_name)
+</PRE>
+<H3><A NAME="SECTION007215200000000000000">
+Description</A>
+</H3>
+This method returns true (that is, different from <TT>nil</TT>) if
+there exists a method or a property of the <TT>luacom_obj</TT> named
+<TT>member_name</TT>.
+
+<H3><A NAME="SECTION007215300000000000000">
+Parameters</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Parameter </B></TH>
+<TH ALIGN="CENTER"><B>Type  </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">luacom_obj</TD>
+<TD ALIGN="CENTER">LuaCOM object</TD>
+</TR>
+<TR><TD ALIGN="CENTER">member_name</TD>
+<TD ALIGN="CENTER">string</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007215400000000000000">
+Return Values</A>
+</H3>
+
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="CENTER"><B>Return Item </B></TH>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=113><B>Possible Values </B></TH>
+</TR>
+<TR><TD ALIGN="CENTER">answer</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113><TT>nil</TT> or non-<TT>nil</TT></TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION007215500000000000000">
+Sample</A>
+</H3>
+
+<PRE>
+
+obj = luacom.CreateObject("MyObject.Test")
+
+if luacom.isMember(obj, "Test") then
+  result = obj:Test()
+end
+</PRE>
+<H1><A NAME="SECTION00730000000000000000">
+6.3 Lua Extended API</A>
+</H1>
+
+<H2><A NAME="SECTION00731000000000000000">
+pairs</A>
+</H2>
+
+<H2><A NAME="SECTION00732000000000000000">
+GetType</A>
+</H2>
+
+<H2><A NAME="SECTION00733000000000000000">
+CreateLocalObject</A>
+</H2>
+
+<H2><A NAME="SECTION00734000000000000000">
+CreateInprocObject</A>
+</H2>
+
+<H2><A NAME="SECTION00735000000000000000">
+LoadConstants</A>
+</H2>
+
+<H2><A NAME="SECTION00736000000000000000">
+FillTypeInfo</A>
+</H2>
+
+<H2><A NAME="SECTION00737000000000000000">
+FillTypeLib</A>
+</H2>
+
+<H1><A NAME="SECTION00740000000000000000"></A>
+<A NAME="sec:enumerator-object"></A>
+<BR>
+6.4 Enumerator Object
+</H1>
+
+The enumerator object is a proxy for the interface
+<TT>IEnumVARIANT</TT>. It can be obtained using the API method
+<TT>GetEnumerator</TT>.
+
+<H2><A NAME="SECTION00741000000000000000">
+Methods</A>
+</H2>
+
+<DL>
+<DT><STRONG>Next</STRONG></DT>
+<DD>returns the next object in the enumeration or <TT>nil</TT>
+if the end has been reached.
+
+</DD>
+<DT><STRONG>Skip</STRONG></DT>
+<DD>skips the next object, returning <TT>true</TT> if succeeded
+of <TT>false</TT> if not.
+
+</DD>
+<DT><STRONG>Reset</STRONG></DT>
+<DD>restarts the enumerator.
+
+</DD>
+<DT><STRONG>Clone</STRONG></DT>
+<DD>returns a new enumerator in the same state.
+
+</DD>
+</DL>
+<H1><A NAME="SECTION00750000000000000000"></A>
+<A NAME="sec:type-library-object"></A>
+<BR>
+6.5 Type Library Object
+</H1>
+
+The type library object is a proxy for the interface
+<TT>ITypeLib</TT>. It can be obtained using the API method
+<TT>LoadTypeLibrary</TT> or the type information object method
+<TT>GetTypeLib</TT>.
+
+<H2><A NAME="SECTION00751000000000000000">
+Methods</A>
+</H2>
+
+<DL>
+<DT><STRONG>GetDocumentation</STRONG></DT>
+<DD>returns a table containing the fields
+<TT>name</TT>, <TT>helpstring</TT>, <TT>helpcontext</TT> and
+<TT>helpfile</TT> for the type library.
+
+</DD>
+<DT><STRONG>GetTypeInfoCount</STRONG></DT>
+<DD>returns the number of type descriptions
+contained in the type library.
+
+</DD>
+<DT><STRONG>GetTypeInfo(n)</STRONG></DT>
+<DD>returns an type information object for the n-th
+type description.
+
+</DD>
+<DT><STRONG>ShowHelp</STRONG></DT>
+<DD>tries to launch the help file associated with the type
+library (if any).
+
+</DD>
+</DL>
+<H1><A NAME="SECTION00760000000000000000"></A>
+<A NAME="sec:type-inform-object"></A>
+<BR>
+6.6 Type Information Object
+</H1>
+
+The type information object is a proxy for the interface
+<TT>ITypeInfo</TT>. It can be obtained using the API method
+<TT>GetTypeInfo</TT> or the type library object method
+<TT>GetTypeInfo</TT>.
+
+<H2><A NAME="SECTION00761000000000000000">
+Methods</A>
+</H2>
+
+<DL>
+<DT><STRONG>GetTypeLib</STRONG></DT>
+<DD>returns the containing type library object.
+
+</DD>
+<DT><STRONG>GetFuncDesc(n)</STRONG></DT>
+<DD>returns a table describing the n-th function of
+the type description. This table contains the following fields:
+<TT>memid</TT> (dispatch identifier), <TT>invkind</TT> (invoke kind),
+<TT>Params</TT> (number of parameters), <TT>ParamsOpt</TT> (number of
+optional parameters), <TT>description</TT>, <TT>helpfile</TT>,
+<TT>helpcontext</TT>, <TT>name</TT>. Besides that, it stores an
+array-like table called <TT>parameters</TT> describing each parameter
+of the function, with these fields: <TT>name</TT>, <TT>type</TT>.
+
+</DD>
+<DT><STRONG>GetVarDesc(n)</STRONG></DT>
+<DD>returns a table describing the n-th variable (or
+constant) in the type description. This table contains the following
+fields: <TT>name</TT>, <TT>value</TT> (for constants only).
+
+</DD>
+<DT><STRONG>GetDocumentation</STRONG></DT>
+<DD>returns a table with documentation for the type
+description, with the fields <TT>name</TT>, <TT>helpstring</TT>,
+<TT>helpcontext</TT> and <TT>helpfile</TT>.
+
+</DD>
+<DT><STRONG>GetTypeAttr</STRONG></DT>
+<DD>returns a table containing the type attributes for
+the type description. This table holds the following fields:
+<TT>GUID</TT>, <TT>typekind</TT>, <TT>Funcs</TT> (number of functions),
+<TT>Vars</TT> (number of variables or constants) and <TT>ImplTypes</TT>.
+There is also a <TT>flags</TT> field, containing a table that describes
+the flags for this type description. This table contains the following
+boolean fields: <TT>control</TT>, <TT>appobject</TT>, <TT>dispatchable</TT>,
+<TT>oleautomation</TT>, <TT>cancreate</TT>.
+
+</DD>
+<DT><STRONG>GetImplType(n)</STRONG></DT>
+<DD>For type descriptions of COM classes, this
+returns the type information object for the n-th interface of the COM
+class.
+
+</DD>
+<DT><STRONG>GetImplTypeFlags(n)</STRONG></DT>
+<DD>For type descriptions of COM classes, this
+returns a table containing the implementation flags for the n-th
+interface belonging to the COM class. This table holds the following
+boolean flags: <TT>default</TT>, <TT>source</TT>, <TT>restricted</TT>,
+<TT>defaultvtable</TT>.
+
+</DD>
+</DL>
+<H1><A NAME="SECTION00800000000000000000">
+7. Credits</A>
+</H1>
+LuaCOM has been developed by Renato Cerqueira and Vinicius
+Almendra. The project has been sponsored by TeCGraf (Technology Group
+on Computer Graphics).
+
+<H1><A NAME="SECTION00900000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>LuaCOM User Manual 
+<BR>
+<FONT SIZE="-1">(Version 1.2 RC1)</FONT></STRONG><P>
+This document was generated using the
+<A HREF="http://www-dsed.llnl.gov/files/programs/unix/latex2html/manual/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2K.1beta (1.47)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+<A HREF="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</A>, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-dir luacom-htmldoc -split 0 -show_section_numbers -local_icons -no_navigation -numbered_footnotes luacom.tex</TT>
+<P>
+The translation was initiated by Vinicius da Silva Almendra on 2004-02-19
+<BR><HR><H4>Footnotes</H4>
+<DL>
+<DT><A NAME="foot56">... add-ons</A><A NAME="foot56"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html1"><SUP>2.1</SUP></A>
+<DD>``Dynamic loading of the
+  LuaCOM library is not supported in the official distribution of
+  LuaCOM, although some may have implemented it elsewhere.
+
+<DT><A NAME="foot58">... Lua</A><A NAME="foot58"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html2"><SUP>2.2</SUP></A>
+<DD>Notice that COM must be initialized in each thread that
+  will use it. To use LuaCOM in this situation, it's not safe to
+  share a single Lua state among several threads; one should create a
+  new Lua state for each thread and then initialize LuaCOM with this
+  state.
+
+<DT><A NAME="foot852">...methods</A><A NAME="foot852"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html3"><SUP>3.1</SUP></A>
+<DD>In version 1.1 the old API is still
+  accessible when LuaCOM is used with Lua 4, so that code written
+  for LuaCOM 1.0 still works with LuaCOM 1.1. It means that all
+  functions of the API can be accessed as <TT>luacom_&lt;function&gt;</TT>
+  or as <TT>luacom.&lt;function&gt;</TT>. This may change in the next
+  versions, so upgrade your code as soon as possible!
+
+<DT><A NAME="foot208">... ``set''</A><A NAME="foot208"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html4"><SUP>3.2</SUP></A>
+<DD>In a future version it might be allowed to
+change the prefix.
+
+<DT><A NAME="foot261">... value</A><A NAME="foot261"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html5"><SUP>3.3</SUP></A>
+<DD>This feature allows a
+clear distinction between the return value and the in-out parameters,
+as all parameters will end up being returned.
+
+<DT><A NAME="foot437">...
+parameters</A><A NAME="foot437"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html6"><SUP>5.1</SUP></A>
+<DD>Notice that LuaCOM does not implement named
+parameters; it just takes them when called from a COM client and
+puts them.
+
+<DT><A NAME="foot636">...
+fields</A><A NAME="foot636"
+ HREF="http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/luacom.html#tex2html7"><SUP>6.1</SUP></A>
+<DD>For a better description of these fields, see COM's
+documentation.
+
+</DL>
+<BR><HR>
+<ADDRESS>
+Vinicius da Silva Almendra
+2004-02-19
+</ADDRESS>
+</BODY>
+</HTML>
+
+<!-- This document saved from http://www.tecgraf.puc-rio.br/~rcerq/luacom/pub/1.2RC1/luacom-htmldoc/ -->

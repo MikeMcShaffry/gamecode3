@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>gpeddler 2</title>
+</head>
+<body background="">
+<a name="top"></a><br>
+<table cellpadding="2" cellspacing="2" border="1"
+ style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" align="center"><a
+ href="index.html">Tools &amp; thanks</a></td>
+      <td style="vertical-align: top;" align="center"><b><u><font
+ color="#cc0000">gpeddler 2</font></u></b> </td>
+      <td style="vertical-align: top;" align="center"><a href="wx.html">wxLua</a></td>
+      <td style="vertical-align: top;" align="center"><a href="oo.html">Simple
+OO in Lua</a></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="notes.html">Code notes</a></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a href="#what">What is gpeddler?</a> <br>
+<a href="#solvers">A tale of two solvers</a> <br>
+<a href="#evolve">The evolutionary solver</a> <br>
+<a href="#mutations">Types of mutations</a><br>
+<a href="#options">The Options dialog</a><br>
+<a href="#multitasking">Multitasking note</a><br>
+<a name="what"></a><br>
+<h2>What is gpeddler? <br>
+</h2>
+A shady robotic peddler is traveling from town to town, selling its
+almost-legal genetic marchandise to almost-respectable bioengineering
+companies. To reduce traveling expenses, it has to find the <b>shortest
+path</b> to visit a number of places and then return home. <br>
+&nbsp;<br>
+This problem is historically known as the "traveling salesman problem" (<b>TSP</b>)
+and, apart from not being Politically Correct (today it is taken to
+mean "Traveling salesperson problem") is NP-complete, i.e.it&nbsp;
+cannot be solved in polynomial time [if I understand this correctly]. Of
+course, it can be almost-solved by heuristic methods: one can find a
+'reasonably good' solution in a decent amount of time. <br>
+&nbsp;<br>
+gpeddler uses a simple <b>evolutionary algorithm</b> (which could be
+made genetic), as described below; I wrote version 1 in 1998 to evaluate
+an implementation of the Dylan language, and I re-wrote it for wxLua for
+the same reason. <br>
+<br>
+The name used to mean "genetic peddler", but this is somewhat
+misleading (at least with the current implementation); it should be
+"evolutionary" instead of "genetic", as there is <b>no exchange</b> of
+genetic material among possible solutions. In other words, this is a
+boring program featuring no sex whatsoever.<br>
+<h3>Important note:</h3>
+I did this just for fun and tool evaluation: I just read a bit about
+evolutionary and genetic algorithms, I know very little of 'standard'
+TSP solving techniques, and I didn't look it up on purpose when I first
+wrote this program: knowing the results beforehand would have spoiled
+the fun. So it may be that gpeddler uses well-known techniques, or
+horribly inefficient ones, or it just uses the wrong approach: blame
+only me for that, not Lua or wxLua, and please do not draw any type of
+'scientific' inference from the behaviour of gpeddler. <br>
+<a name="solvers"></a><br>
+<h2>A tale of two solvers</h2>
+gpeddler runs two solvers in parallel [*]: the <b>exhaustive solver</b>
+just tries out all the (n-1)! possible routes for n places, and sooner
+or later finds a perfect solution; for small values of n, it could even
+find it before the end of Time, Universe and Everything. <br>
+<br>
+The <b>evolutionary solver</b> operates by natural selection, applying
+mutations to a collection of traveling routes, then keeping only the
+best ones for the next generation. A <b>route</b> is a list to places to
+be visited, in a given order. If there are 10 places, then here is a
+possible route: <br>
+<blockquote>1, 2, 3, 4, 5, 6, 7, 8, 9, 10 (and then return to place 1) <br>
+</blockquote>
+which, in the rest of this page, will be indicated with a capital
+letter: <br>
+<blockquote>route A<br>
+</blockquote>
+[*] Due to the coroutine approach used by Lua, the two solvers do not
+share time exactly, see <a href="notes.html">Code notes</a>.<br>
+<a name="evolve"></a><br>
+<h2>The evolutionary solver</h2>
+Each generation (corresponding to a loop iteration) starts with a
+collection of routes, called a <b>pool</b>; if the chosen pool size is
+5, then the pool will contain 5 routes: <br>
+<blockquote>ABCDE<br>
+</blockquote>
+First, the route population is <b>grown</b> by making the appropriate
+number of copies of the pool's contents, and keeping the original apart.
+If the growth factor is 4, the situation after pool growing will be: <br>
+<blockquote>ABCDEABCDEABCDEABCDE<br>
+</blockquote>
+Then, a number of <b>mutations</b> are applied to the grown pool,
+resulting in mutated routes (shown here as lowercase red letters): <br>
+<blockquote>A<font color="#cc0000">ef</font>D<font color="#cc0000">ghijklm</font>BC<font
+ color="#cc0000">no</font>A<font color="#cc0000">pq</font>D<font
+ color="#cc0000">r</font><br>
+</blockquote>
+Note than some of the routes can be unaffected, while others could be
+mutated twice (or more); the original non-mutated routes are then <b>added
+back</b> to the pool: <br>
+<blockquote>ABCDEA<font color="#cc0000">ef</font>D<font color="#cc0000">ghijklm</font>BC<font
+ color="#cc0000">no</font>A<font color="#cc0000">pq</font>D<font
+ color="#cc0000">r</font></blockquote>
+At this point, the pool is <b>sorted</b> by ascending route length, so
+that the best (shortest) routes occupy the first places: <br>
+<blockquote><font color="#cc0000">gp</font>CC<font color="#cc0000">f</font>ABD<font
+ color="#cc0000">o</font>A<font color="#cc0000">en</font>D<font
+ color="#cc0000">rjq</font>E<font color="#cc0000">i</font>B<font
+ color="#cc0000">lh</font>A<font color="#cc0000">k</font>D<font
+ color="#cc0000">m</font><br>
+</blockquote>
+Lastly, only the <b>best</b> (first) routes are kept, the rest is
+discarded; in this case, since pool size is 5: <br>
+<blockquote><font color="#cc0000">gp</font>CC<font color="#cc0000">f</font></blockquote>
+This new pool of routes becomes the new generation; all of the above is <b>repeated</b>
+until there are no changes to the best (first) route for the chosen
+number of generations. <br>
+<br>
+Note that this approach is <b>not guaranteed</b> to find the best
+solution, only a 'reasonable' one; furthermore, there is not even any
+certainty that the evolutionary approach will converge towards a
+reasonable solution, even if it empirically seems to do so. <br>
+<a name="mutations"></a><br>
+<h2>Types of mutations</h2>
+This version of gpeddler uses only a <b>single type</b> of route
+mutation, the "reverse subroute": <br>
+<blockquote>before:<br>
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10 <br>
+  <br>
+after:<br>
+1, 2, 3, 4, 8, 7, 6, 5, 9, 10&nbsp; (5, 6, 7, 8 reversed) <br>
+</blockquote>
+This type of mutation seems to be quite effective in converging rapidly
+towards a 'decent' solution, by 'untwisting' sections of the
+route.&nbsp; The program could be easily <b>modified</b> to experiment
+with different mutation types, by changing the
+EvolutionarySolver:Mutate() function in <font color="#993399">solver.lua</font>.<br>
+&nbsp;<br>
+What is obviously missing here are 'sexy' mutations, to combine
+different parts of two routes, so that the program could be really
+called <b>genetic</b> (this could probably work better with a different
+data representation).<br>
+<br>
+Lots of other <b>improvements</b> could be introduced but, as I said,
+this program has been written to evaluate a software tool; the TSP
+problem was just an excuse.<br>
+<a name="options"></a><br>
+<h2>The Options dialog </h2>
+The dialog window that is called by the "Options" button offers the
+opportunity to <b>experiment</b> by changing a number of parameters:<br>
+<br>
+<div align="center"><img src="options.png" title="" alt="" width="306"
+ height="238"><br>
+</div>
+<br>
+<b>Number of places</b> defines how many places a route contains; it is
+the only setting that affects both the exhaustive and the evolutionary
+solver. For very small values (usually less than 7-8) the exhaustive
+solver is faster, while the evolutionary solver wins hands down when
+more places are added. Besides, it can actually find a decent solution
+even for a large number of places, whose possible routes simply cannot
+be enumerated in realistic time.<br>
+<br>
+<b>Best routes pool size</b> is the number of routes that are kept at
+every generation. The rationale behind this is that keeping many
+'winning' routes (not only the best one) can be an insurance against
+evolutionary dead ends. In practice, with the mutation type used in
+gpeddler 2 there are no dead ends, so the evolutionary solver runs
+faster with a pool size of 1 (i.e. keeping only the best solution).
+However, I left this in place for experiments with different mutation
+types (or for genetic algorithms).<br>
+<br>
+<b>Pool growth by</b> is the growth factor: how many copies are made of
+the existing pool of routes, before mutations are applied (see <a
+ href="#evolve">description</a> above).<br>
+<br>
+<b>Mutations as % of pool</b> is the number of mutations given as
+percentage of pool size (after growing); for example, if the grown pool
+contains 30 routes, 100% means that 30 mutations are applied. That does
+not mean that 1 mutation&nbsp; is applied to each route: the route to be
+mutate is selected at random, so some routes could be left untouched
+while others could be mutated more than once.<br>
+<br>
+<b> Steady count to finish</b> is the termination condition for the
+evolutionary solver: it quits trying when it cannot found a better
+(shorter) route for the given number of generations. The best setting
+depends on the other settings; a value too low means that the solver
+will terminate prematurely, possibly with a far-from-optimal solution,
+while a value too high will make it going on and on even after finding a
+decent solution.<br>
+<a name="multitasking"></a><br>
+<h2>Multitasking note</h2>
+Due to the way multitasking is implemented in Lua, in gpeddler 2 there
+is <b>no equal time sharing</b> between solvers. I tried to roughly
+balance processing time between the exhaustive and the evolutionary
+solver, but please do not rely on this to draw any sort of conclusion.<br>
+<br>
+On the other hand, the two algorithms have different O() <b>complexity</b>,
+therefore such a linear execution time difference between them does not
+significantly alter a qualitative comparison. <br>
+<br>
+<br>
+<a href="#top">Back to start of page</a><br>
+<br>
+</body>
+</html>

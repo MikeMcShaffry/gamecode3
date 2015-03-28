@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxLuaLib_wx25", "Library\wxLuaLib_wx25.vcproj", "{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxLua_wx25", "Standalone\wxLua_wx25.vcproj", "{419F6B42-D838-4CFA-9565-6E41F54F8C5E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61} = {9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}.Debug.ActiveCfg = Debug|Win32
+		{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}.Debug.Build.0 = Debug|Win32
+		{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}.Release.ActiveCfg = Release|Win32
+		{9D0895B5-0F89-4A46-96FF-E8E8A6A0ED61}.Release.Build.0 = Release|Win32
+		{419F6B42-D838-4CFA-9565-6E41F54F8C5E}.Debug.ActiveCfg = Debug|Win32
+		{419F6B42-D838-4CFA-9565-6E41F54F8C5E}.Debug.Build.0 = Debug|Win32
+		{419F6B42-D838-4CFA-9565-6E41F54F8C5E}.Release.ActiveCfg = Release|Win32
+		{419F6B42-D838-4CFA-9565-6E41F54F8C5E}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

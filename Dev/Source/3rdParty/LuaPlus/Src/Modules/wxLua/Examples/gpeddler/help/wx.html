@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>gpeddler 2: wxLua</title>
+</head>
+<body background="">
+<a name="top"></a><br>
+<table cellpadding="2" cellspacing="2" border="1"
+ style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" align="center"><a
+ href="index.html">Tools &amp; thanks</a></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="gpeddler2.html">gpeddler 2</a> </td>
+      <td style="vertical-align: top;" align="center"><b><u><font
+ color="#cc0000">wxLua</font></u></b></td>
+      <td style="vertical-align: top;" align="center"><a href="oo.html">Simple
+OO in Lua</a></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="notes.html">Code notes</a></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a href="#using">Using wxLua</a><br>
+<a href="#ui">UI layout</a><br>
+<a href="#buffer">Buffered drawing</a><br>
+<a href="#help">Help in HTML</a><br>
+<a href="#missing">Missing features</a><br>
+<a name="using"></a><br>
+<h2>Using wxLua</h2>
+wxLua &lt;<font color="#3333ff">http://www.luascript.thersgb.net</font>&gt;
+makes most of the power of <b>wxWindows</b> available to Lua
+programmers, without having to write a single line of C++. I wrote
+gpeddler 2 to try it out.<br>
+<br>
+In my opinion, wxLua seems to be rather complete and <b>usable</b>,
+even if (at the time of this writing) some differences from Lua calls to
+C++ calls seems to be a bit under-documented. I got around this by using
+the wxWindows documentation together with the file <font color="#993399">classes.txt</font>
+included in the wxLua distribution.<br>
+<a name="ui"></a><br>
+<h2>UI layout</h2>
+wxLua offers different ways to design a window (frame) layout. The
+easiest one is probably to use a <b>visual editor</b> (e.g. xrced) to
+design an XRC resource file containing an XML description of the desired
+layout.<br>
+<br>
+I chose to do things the hard way instead: gpeddler 2 creates wxLua
+interface elements from the program itself, then aligns them using
+wxWindows "sizers". The main reason was that I wanted to <b>understand</b>
+how things worked at low level, and also to learn how to create or
+change a layout at runtime.<br>
+This takes up a lot of code and time, so for unchanging layouts in a
+production environment a visual editor is recommended.<br>
+<br>
+<b>Sizers</b> are a bit difficult to get a good grip of at first, but
+they enhance portability and handle window resizing very nicely (try
+resizing the main window).<br>
+<br>
+The most interesting UI code is in the <b>interface definition</b>
+section in <font color="#993399">gpeddler2.wx.lua</font>.<br>
+<br>
+The only <b>problem</b> I encountered with wxWindows is an incorrect
+redesign of part of the Options dialog window, after showing an error
+message window (e.g. for an out-of-range value); it does not affect
+functionality, though. <br>
+<a name="buffer"></a><br>
+<h2>Buffered drawing</h2>
+To avoid flickering in the route diagrams, gpeddler 2 uses a buffer <b>off-screen
+bitmap</b> (<font color="#006600">Solver.bitmap</font>): all drawing is
+done into this bitmap using a memory device context (<font
+ color="#006600">wxMemoryDC</font>), then updated to the screen when
+appropriate. The latter is done by the main "idle" function to avoid
+every possible conflict for screen access.<br>
+<br>
+As the main window (frame) is resizable, the buffer bitmap is
+deallocated and&nbsp; <b>reallocated</b> when the size of a route
+drawing area changes. Try resizing the window while the program is
+running to see it at work.<br>
+<br>
+The <b>buffer bitmap</b> code is in <font color="#006600">Solver:Repaint()</font>
+in <font color="#993399">solver.lua</font>, while the <b>drawing</b>
+code is in <font color="#006600">Route:Draw()</font> in <font
+ color="#993399">route.lua</font>.<br>
+<br>
+To increase drawing efficiency, the concept could be further extended
+by creating a second buffer bitmap for the <b>unchanging</b> part of the
+route drawing area, e.g. the places (small squares) and their numeric
+labels. <br>
+<a name="help"></a><br>
+<h2>Help in HTML</h2>
+Since I didn't have time for a full-fledged 'official' HTML help, I
+just put together a <b>window</b> (frame) to show these pages. It is in
+any case much better than an "About" box and an external documentation,
+and doesn't require much more effort.<br>
+<br>
+The help code in the <font color="#993399">help.lua</font> file.<br>
+<br>
+I created the help pages using the <b>Mozilla Composer</b>, which is
+more than adequate for simple HTML editing. Note that CSS must be
+disabled in the Composer, because it is not recognized by the wxWindow
+HTML renderer.<br>
+<a name="missing"></a><br>
+<h2>Missing features</h2>
+I am perfectly aware that the interface <b>could be better</b>: I left
+behind a few things I wasn't able to do in a reasonable amount of time:<br>
+<br>
+- Keyboard support is incomplete.<br>
+- The help window does not have a 'back' function.<br>
+<br>
+<br>
+<a href="#top">Back to start of page</a><br>
+<br>
+</body>
+</html>

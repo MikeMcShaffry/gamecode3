@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>gpeddler 2: Code notes</title>
+</head>
+<body background="">
+<a name="top"></a><br>
+<table cellpadding="2" cellspacing="2" border="1"
+ style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" align="center"><a
+ href="index.html">Tools &amp; thanks</a></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="gpeddler2.html">gpeddler 2</a> </td>
+      <td style="vertical-align: top;" align="center"><a href="wx.html">wxLua</a></td>
+      <td style="vertical-align: top;" align="center"><a href="oo.html">Simple
+OO in Lua</a></td>
+      <td style="vertical-align: top;" align="center"><b><u><font
+ color="#cc0000">Code notes</font></u></b></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a href="#model">Mixed model</a><br>
+<a href="#closures">Handlers and closures</a><br>
+<a href="#coroutines">Coroutines</a><br>
+<a href="#idle">The Idle handler</a><br>
+<a href="#conotes">Coroutine notes</a><br>
+<a href="#redraw">Window redrawing</a><br>
+<a name="model"></a><br>
+<h2> Mixed model</h2>
+gpeddler 2 is rather <b>incoherent</b> as far as the programming model
+is concerned: for example <font color="#006600">MainFrame</font>, <font
+ color="#006600">Route</font>, <font color="#006600">Solver</font> and <font
+ color="#006600">Options</font> are designed in object-oriented fashion
+(ad described in <a href="oo.html">Simple OO in Lua</a>), <font
+ color="#006600">Place</font> is treated as a "half-object" (functions
+are kept separate from data) and <font color="#006600">HelpFrame</font>
+is just a hastily-written function with associated static data.<br>
+<br>
+This is by choice: I am not a purist; I try to get the most <b>advantages</b>
+from different approaches, even if it means shamelessly mixing different
+programming models in the same program. Some choices are of course
+influenced by the small size of the application.<br>
+<br>
+In fact, I could have avoided using proper <b>objects</b> in <font
+ color="#006600">MainFrame</font> (there is only one main frame, after
+all), but I wanted to try out my OO approach in a realistic situation.
+Maybe I was also influenced by my experience with C++ frameworks...
+anyway, this allows multiple copies of the main window to be
+instantiated, even if that would not be significant for this application.<br>
+<br>
+Speaking of objects, instead of designing the <font color="#006600">ExhaustiveSolver</font>
+and <font color="#006600">EvolutionarySolver</font> classes (as
+subclasses of <font color="#006600">Solver</font>), I could have
+created and <b>modified</b> two instances of <font color="#006600">Solver</font>.
+That would have been a readability crime, however, and I would also
+have lost my example of inheritance.<br>
+<a name="closures"></a><br>
+<h2>Handlers and closures</h2>
+Closures are a powerful feature of Lua, but they are not easy to <b>intuitively</b>
+grasp at first, especially if your experience is from static languages
+(as mine mostly is). While writing this program, I encountered a
+situation where they provide a simple and elegant solution to a problem
+most programmers will recognize: <b>callbacks</b> in an object-oriented
+environment. It really helped me understand closures, at least at a
+first level.<br>
+<br>
+This is a line from <font color="#006600">Solver.Create()</font>, the <font
+ color="#006600">Solver</font> class constructor in the file <font
+ color="#993399">solver.lua</font>, formatted into three lines for
+convenience:<br>
+<br>
+<tt>self.window:ConnectEvent(wx.wxEVT_PAINT, <br>
+&nbsp; function(ev) self:Repaint() end<br>
+)</tt><br>
+<br>
+It connects an unnamed <b>event function</b> to the given window; in
+other terms, every time the window sends a <font color="#006600">wx.wxEVT_PAINT</font>
+event, the function built in the second line gets called. This function,
+in turn, calls the <font color="#006600">Repaint()</font> function that
+redesign the window's contents. As the unnamed event handler function is
+called back from wxWindow when required, that's a "callback".<br>
+<br>
+Well, where's the <b>problem</b>? Let's look into this deceptively
+simple piece of code to see what happens behind the scenes. Consider the
+function:<br>
+<br>
+<tt>self:Repaint()</tt><br>
+<br>
+It is <b>translated</b> by the Lua compiler to:<br>
+<br>
+<tt>self.Repaint(self)</tt><br>
+<br>
+Since the <font color="#006600">Repaint</font> field of all <font
+ color="#006600">Solver</font> objects refer to the <b>same</b> function <font
+ color="#006600">Solver.Repaint()</font>, the above line is equivalent
+to:<br>
+<br>
+<tt>Solver.Repaint(self)</tt><br>
+<br>
+This means that the same <font color="#006600">Repaint()</font>
+function is called for different objects. How does the program know <b>which
+object</b> has to be repainted? By looking at the <font color="#006600">self</font>
+variable, of course. If we have two different <font color="#006600">Solver</font>
+objects:<br>
+<br>
+<tt>solver1 -- a Solver<br>
+solver2 -- another Solver<br>
+</tt><br>
+we actually need their respective <font color="#006600">wx.wxEVT_PAINT</font>
+handlers to make two <b>different</b> function calls:<br>
+<br>
+<tt>solver1:Repaint() -- repaint the first Solver's window<br>
+solver2:Repaint() -- repaint the second Solver's window<br>
+</tt><br>
+which is a <b>compact</b> and more efficient way of saying:<br>
+<br>
+<tt>solver1.Repaint(solver1)<br>
+solver2.Repaint(solver2)<br>
+</tt><br>
+The problem here is not the calling of different functions, but the
+calling of the same function with <b>a different argument</b>: either <font
+ color="#006600">solver1</font> or <font color="#006600">solver2</font>
+in our example. The argument, however, is known <b>now</b> (when the
+unnamed handler function is created) but will need to be used <b>later</b>
+(when the unnamed handler function will be called by wxWindows): it has
+to be saved somewhere.<br>
+<br>
+Here we get to <b>closures</b> (at last). When this expression is
+executed:<br>
+<br>
+<tt>function(ev) self:Repaint() end<br>
+<br>
+</tt>The <b>current value</b> of the variable <font color="#006600">self</font>
+is used in creating the new unnamed function, and it is remembered
+inside the function. In other words, this piece of code:<br>
+<br>
+<tt>self = solver1<br>
+function(ev) self:Repaint() end<br>
+</tt><br>
+creates a function that permanently refers to the value that <font
+ color="#006600">self</font> had<b> at the time of function creation</b>,
+as if we had written:<br>
+<br>
+<tt>function(ev) solver1:Repaint() end<br>
+</tt><br>
+or, more explicitly:<br>
+<br>
+<tt>function(ev) solver1.Repaint(solver1) end<br>
+</tt><br>
+which (by the way) in the case of all objects pointing to the same <font
+ color="#006600">Repaint()</font> function, means:<br>
+<br>
+<tt>function(ev) Solver.Repaint(solver1) end<br>
+</tt><br>
+Since in the constructor <font color="#006600">Solver.Create()</font>
+the variable <font color="#006600">self</font> refers to the <b>current
+object</b> just created in the constructor itself, our trivial-looking
+code:<br>
+<br>
+<tt>self.window:ConnectEvent(wx.wxEVT_PAINT, <br>
+&nbsp; function(ev) self:Repaint() end<br>
+)</tt><br>
+<br>
+will create a different unnamed handler function every time, and then
+pass it to <font color="#006600">ConnectEvent()</font>. Each of these
+functions, when called back from wxWindows, will call <font
+ color="#006600">Solver.Repaint()</font> with <b>a different argument</b>:
+the current object (i.e. the value of variable <font color="#006600">self</font>)
+at the time the function was created, which is exactly what we want.<br>
+<br>
+In short, closures can be used to build a function at runtime, setting
+the <b>values</b> that some variables (in our case, <font
+ color="#006600">self</font>) will have inside the function itself.<br>
+<a name="coroutines"></a><br>
+<h2>Coroutines</h2>
+gpeddler 2 runs on a <b>single thread</b>, yet it manages to run two
+solving algorithms in parallel (showing their progress in two different
+windows) and to respond promptly to user interface commands, all
+apparently at the same time. It does this by using two different
+techniques: coroutines and idle events.<br>
+<br>
+Modern operating systems offer <b>preemptive multitasking</b> within a
+single application: there can be many virtually independent flows of
+control, usually caused "threads". <br>
+Lua, being strictly ANSI-C based, cannot do this in a truly portable
+way (even if there are provisions for using external thread
+functionalities). It offers instead, starting from version 5.0, <b>cooperative
+multitasking</b> built into the language itself under the name of
+"coroutines". <br>
+<br>
+While threads are completely <b>transparent</b>, i.e. they know
+nothing&nbsp; about the existance of other threads, coroutines are not:
+they must cooperate by executing a short piece of their code and then
+giving other coroutines an opportunity to run.<br>
+<br>
+A function launched as a coroutine must periodically call <font
+ color="#006600">coroutine.yield()</font>; this has the effect of <b>suspending</b>
+its execution, remembering its whole status, and returning to the
+calling function. A subsequent call to <font color="#006600">coroutine.resume()</font> <b>continues</b>
+the execution as if nothing had happened in between.<br>
+<br>
+In gpeddler 2, a solver coroutine is <b>started</b> by <font
+ color="#006600">Solver:StartSolving()</font>&nbsp; in the file <font
+ color="#993399">solver.lua</font>:<br>
+<br>
+<tt>self.solverCo = coroutine.create(self.Solve)<br>
+local r, err = coroutine.resume(self.solverCo, self)<br>
+</tt><br>
+The first line creates the coroutine, the second line starts <b>executing</b>
+its code. A typical function executing as a coroutine has a structure
+similar to this one:<br>
+<br>
+<tt>-- launched as couroutine<br>
+--<br>
+function doit()<br>
+&nbsp; while not finished do<br>
+&nbsp;&nbsp;&nbsp; -- perform a bit of work<br>
+&nbsp;&nbsp;&nbsp; coroutine.resume()<br>
+&nbsp; end<br>
+end<br>
+</tt><br>
+This is a bit more involved in the <font color="#006600">ExhaustiveSolver:Solve()</font>
+and <font color="#006600">EvolutionarySolver:Solve()</font> functions in
+gpeddler 2, but nethertheless it boils down to just calling <font
+ color="#006600">coroutine.yield()</font> more or less periodically.<br>
+A good <b>compromise</b> should be made here: if the coroutine function
+yields too often, much time could be lost in task switching (rather than
+working); on the other hand, if too much time passes between <font
+ color="#006600">coroutine.yield()</font> calls, the other coroutines
+will be starved of CPU resources (and the user interface could become
+unresponsive).<br>
+<br>
+When a coroutine calls <font color="#006600">coroutine.yield()</font>
+to stop working and allow the rest of the system to have some CPU time,
+somebody else has to later call <font color="#006600">coroutine.resume()</font>
+to make the coroutine processing continue, or it would wait forever. <br>
+For example, there could be a <b>scheduler</b>, that could be as
+simple as:<br>
+<br>
+<tt>while not finished do<br>
+&nbsp; coroutine.resume(coroutine1)<br>
+&nbsp; </tt><tt>coroutine.resume(coroutine1)<br>
+&nbsp; -- etc.<br>
+end<br>
+</tt><br>
+gpeddler 2 uses this approach, but adds another multitasking level to
+handle <b>interface</b> requirements, as described below.<br>
+<a name="idle"></a><br>
+<h2>The Idle handler</h2>
+In an event-driven environment like wxWindows, it is not a good idea to
+stop responding to events because the program is currently doing
+something else: events should be served <b>as soon as possible</b>.
+Windows contents should be promptly redesigned at the system's request,
+and user feedback should never give an impression of sluggishness.<br>
+<br>
+Therefore, event handling takes precedence; the program must be always <b>ready
+to serve events</b> on short notice. In other words, all event handler
+functions should perform their duty and return fairly quickly.<br>
+<br>
+In gpeddler 2 the rest of the work, which is the actual work from the
+user's point of view, is done while the system (meaning the wxWindows
+runtime) is <b>idle</b>, i.e. there are no events to serve.<br>
+This is the duty of the <font color="#006600">MainFrame:OnIdle()</font>
+function, installed by the initialization function <font color="#006600">MainFrame:Init()</font>
+that is called automatically when there are no pending events and mainly
+acts as <b>coroutine scheduler</b>:<br>
+<br>
+<tt>function MainFrame:OnIdle(ev)<br>
+&nbsp; self.solver1:ContinueSolving() -- can be called even if not
+active<br>
+&nbsp; self.solver2:ContinueSolving()<br>
+&nbsp; -- enable/disable interface elements<br>
+&nbsp; self:UpdateInterface()<br>
+&nbsp; ev:RequestMore() -- call me again if still idle<br>
+end<br>
+</tt><br>
+It just does a small piece of work for each of the solvers by calling <font
+ color="#006600">coroutine.resume()</font> for each of them, updates the
+interface to the current state of the solvers (e.g. by enabling the
+"Stop" button if a solver is running) and then tells the system to <b>call
+again</b> this idle function as soon as there will be no pending events.
+So, in absence of events, the idle function actually runs as if in a
+loop; on the other hand, if there are events they are immediately
+handled.<br>
+<br>
+The <font color="#006600">ContinueSolving()</font> function just call <font
+ color="#006600">coroutine.resume()</font> and prints out information
+about any error that could happen inside the coroutine itself.<br>
+<a name="conotes"></a><br>
+<h2>Coroutine notes</h2>
+<font color="#006600">coroutine.yield()</font> and <font color="#006600">coroutine.resume()</font>
+can also be used to pass <b>extra information</b> back and forth.
+gpeddler 2 uses this opportunity to send a 'stop request' to a solver
+coroutine. The information is sent as second argument of <font
+ color="#006600">coroutine.resume()</font> by <font color="#006600">Solver:StopSolving()</font>:<br>
+<br>
+<tt>local r, err = coroutine.resume(self.solverCo, true)</tt><br>
+<br>
+and <b>received</b> by <font color="#006600">ExhaustiveSolver:Solve()</font>
+or <font color="#006600">EvolutionarySolver:Solve()</font>, both of
+which run as coroutines:<br>
+<br>
+<tt>stopRequest = coroutine.yield() -- true = termination request</tt><br>
+<br>
+(this is actually a bit more complex in <font color="#006600">EvolutionarySolver:Solve()</font>,
+but it is basically the same)<br>
+<br>
+The other coroutine communication channel, i.e. <b>passing back</b>
+information using a <font color="#006600">coroutine.yield()</font>
+argument, is not used in this program. It could be used, for example, to
+inform the coroutine caller about the current status of the coroutine
+process.<br>
+<br>
+&nbsp; Some of the most significant <b>drawbacks</b> of using
+coroutines (as opposed to threads) are:<br>
+<ul>
+  <li>Multitasking is not fully transparent to the programmer.</li>
+  <li>There is the added red tape of having to call <font
+ color="#006600">coroutine.yield()</font> at short intervals.</li>
+  <li>A scheduler (or equivalent mechanism) should be provided by the
+programmer.</li>
+  <li>Scheduling in a high-level language (such as Lua) is slightly
+less efficient.</li>
+  <li>Equal time-processing among coroutines cannot be guaranteed,
+because it depends on the time spent between <font color="#006600">coroutine.yield()</font>
+calls.<br>
+  </li>
+</ul>
+On the other hand, there are many <b>advantages</b>:<br>
+<ul>
+  <li>Lua programs using coroutines are fully portable among different
+operating systems.</li>
+  <li>There are no problems in concurrent access to shared data: a
+coroutine cannot be interrupted between&nbsp; calls.</li>
+  <li>The hand-made scheduler gives better control over coroutine
+priorities and time-sharing.</li>
+  <li>Designing and debugging coroutines is a lot easier.<br>
+    <a name="redraw"></a><br>
+  </li>
+</ul>
+<h2>Window redrawing<br>
+</h2>
+A program in which three separate flows of control (the user interface
+and the two solvers) could <b>access the screen</b> at the same time
+usually tends to have problems. Fortunately, both wxWindows and Lua
+offer tools to prevent such problems happening.<br>
+<br>
+wxWindows gives the programmer <b>two different ways</b> to access a
+window for drawing, available through wxLua as <font color="#006600">wx.wxPaintDC</font>
+and <font color="#006600">wx.wxClientDC</font>. <br>
+The first one is used when redrawing is required by the system, i.e.
+inside an <font color="#006600">OnPaint</font> event handler, while <font
+ color="#006600">wx.wxClientDC</font> can be freely used from the
+program to draw as it whishes. This <b>prevents</b> conflicts between
+predictable drawing performed by the program (i.e. the solvers) and
+asyncronous drawing executed in response to a window redraw request.<br>
+<br>
+gpeddler 2, however, ignores this opportunity and uses an even <b>cleaner
+approach</b>: the solvers never draw anything on their window. They
+just invalidate the window contents to tell the system that it needs to
+be redrawn. For example, in <font color="#006600">Solver:EvaluateRoute()</font>
+in the file <font color="#993399">solver.lua</font>:<br>
+<br>
+<tt>-- request window redrawing with no background drawing<br>
+self.window:Refresh(wx.FALSE)<br>
+</tt><br>
+The system, in turn, will call the window <b>repaint handler</b> <font
+ color="#006600">Solver:Repaint()</font> installed by the constructor <font
+ color="#006600">Solver.Create()</font>:<br>
+<br>
+<tt>self.window:ConnectEvent(wx.wxEVT_PAINT, function(ev)
+self:Repaint() end)</tt><br>
+<br>
+For this approach to work satisfactorily, there should be <b>no
+perceivable delay</b> between the invalidating call to <font
+ color="#006600">Window:Refresh()</font> (inside a solver coroutine) and
+the system-initiated call to the repaint handler. This is achieved by
+making sure that the solving coroutines do not spend too much time
+before yielding CPU control by calling <font color="#006600">coroutine.yield()</font>.<br>
+<br>
+<b>Text labels</b>, on the other hand, in this program are just redrawn
+as needed, leaving to wxWindows the responsibility to avoid possible
+redrawing conflicts (presumably by the internal use of <font
+ color="#006600">wxClientDC</font>). <br>
+A possible speed and redrawing improvement could have been the use of a <b>buffer
+bitmap</b> to have flicker-free text labels, but that would have
+probably been excessive for such a simple program.<br>
+<br>
+<br>
+<a href="#top">Back to start of page</a><br>
+<br>
+<br>
+</body>
+</html>

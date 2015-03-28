@@ -1,0 +1,30 @@
+#
+# File:		makefile.unx
+# Author:	J Winwood
+# Created:	2002
+# Updated:
+# Copyright: (c) 2002. J Winwood
+#
+#
+# Makefile for wxLua library, Unix
+
+WXLUA = ../../wxLua
+LUA=$(WXLUA)/lua-5.0.2
+
+WXDIR = $(shell wx-config --prefix)
+WXCXXFLAGS =  $(shell wx-config --cxxflags)
+
+include $(WXLUA)/Import/wrappers.lst
+
+THEWRAPPERS=$(addprefix $(WXLUA)/Import/, $(WRAPPERS))
+
+all: wxLuaWrap.cpp
+
+DEPFILES = wrap.lua luasetup.h.in $(WXLUA)/Import/wxLuaWrap.lua $(WXLUA)/Import/Overrides.hpp $(THEWRAPPERS)
+
+wxLuaWrap.cpp: $(DEPFILES)
+	$(LUA)/bin/lua -e"target=\"gtk\"; wxWinDir=\"$(WXDIR)\"; wxCxxFlags=\"$(WXCXXFLAGS)\"" wrap.lua
+
+clean:
+	rm -f wxLuaWrap.cpp
+

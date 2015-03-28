@@ -1,0 +1,6 @@
+# usage get_classinfo /path/to/include/wx/*.h > outputfilename
+
+grep -r "DECLARE_CLASS" $*
+grep -r "DECLARE_DYNAMIC_CLASS" $*
+grep -r "DECLARE_ABSTRACT_CLASS" $*
+

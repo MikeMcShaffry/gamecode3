@@ -1,0 +1,21 @@
+This is a simple means to find which classes have classinfo. 
+Meaning they do DECLARE_DYNAMIC_CLASS, DECLARE_ABSTRACT_CLASS, or
+DECLARE_CLASS.
+
+first run 
+$get_classinfo /path/to/include/wx/* >classinfo
+
+class info now contains all the classes that DO have classinfo.
+
+then run 
+
+../../../lua50/bin/lua classinfo.lua > noclassinfo
+
+to get a alphabetically sorted list of classes that DON'T have
+any classinfo.
+
+This list is used to double check the %noclassinfo tags in the 
+.i wrapper files. It can also be used to check for %encapsulate
+since many wxObject derived classes will have classinfo, but not all
+so you still have to double check for whether %encapsulate is
+necessary.

@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Simple OO in Lua</title>
+</head>
+<body background="">
+<a name="top"></a><br>
+<table cellpadding="2" cellspacing="2" border="1"
+ style="text-align: left; width: 100%;">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" align="center"><a
+ href="index.html">Tools &amp; thanks</a></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="gpeddler2.html">gpeddler 2</a> </td>
+      <td style="vertical-align: top;" align="center"><a href="wx.html">wxLua</a></td>
+      <td style="vertical-align: top;" align="center"><b><u><font
+ color="#cc0000">Simple OO in Lua</font></u></b></td>
+      <td style="vertical-align: top;" align="center"><a
+ href="notes.html">Code notes</a></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a href="#objects">Objects in Lua</a><br>
+<a href="#class">Defining a class</a><br>
+<a href="#instance">Making an instance</a><br>
+<a href="#methods">Defining methods</a><br>
+<a href="#initializers">Initializers</a><br>
+<a href="#static">Static fields</a><br>
+<a href="#inherit">Inheritance</a><br>
+<a href="#super">Access to superclasses</a><br>
+<a href="#notes">Notes</a><br>
+<a name="objects"></a><br>
+<h2>Objects in Lua</h2>
+Lua is not an object-oriented language in itself, but it is <b>flexible</b>
+enough to be used like one when desired. There are different approaches
+to object-orientedness in Lua, usually implying metamethods.<br>
+<br>
+The approach I used in gpeddler 2 is <b>very basic</b> and does not use
+metamethods; it could be called "Cheap Lua Object System", but
+unfortunately that acronym is already taken ;-) <br>
+I do not know if this approach has already been proposed (I confess I
+do not read as much as I should do), in any case it is more than enough
+for my simple needs. It uses a single helper function: <font
+ color="#336666">Utils.ShallowCopy()</font>, defined in <font
+ color="#993399">utils.lua</font><br>
+<br>
+Not being an OO worshipper, I only used objects where I considered them
+to be useful in this program, maybe overdoing this a bit for the sake of <b>experiment</b>
+(as in the <font color="#006600">MainFrame</font> 'class'). The two
+'classes' that may be worth a look are <font color="#006600">Route</font>
+in <font color="#993399">route.lua</font> and especially <font
+ color="#006600">Solver</font> in <font color="#993399">solver.lua</font>;
+the latter demonstrates <b>inheritance</b> and <b>polymorphism.</b><br>
+<br>
+The rest of this page describes my approach to objects in Lua.<br>
+<a name="class"></a><br>
+<h2>Defining a class<br>
+</h2>
+Lua being a dynamic language, there is no need for painstakingly
+detailed declarations: an object is just a <b>table</b> including data
+fields (data members) and function fields (methods). Furthermore, an
+object is created by simply making a copy of a <b>master object</b>,
+i.e. the 'class'.<br>
+<br>
+For example, this is a class (a master object table):<br>
+<br>
+<tt>--<br>
+-- class Square<br>
+--<br>
+Square = {<br>
+&nbsp; side = nil -- see note below<br>
+}<br>
+</tt><br>
+Note that the expression inside the table has <b>no effect</b>, it is
+just there to document a field that will be defined later. So, in fact,
+the simplest class is just an empty table, although it could contain
+initializers and static fields, as shown later. <br>
+<br>
+The 'class' table will also contain <b>functions</b> (methods), but
+they will be added implicitly as they are defined (and, hopefully,
+documented) in the source code, so there is no need to write anything
+here.<br>
+<a name="instance"></a><br>
+<h2>Making an instance</h2>
+An object is created by calling its <b>constructor</b> function
+(method), conventionally named <font color="#336666">Create()</font>,
+passing all the required arguments:<br>
+<br>
+<tt>sq = Square.Create(5)<br>
+</tt><br>
+Here is the <b>constructor</b> that produces instances of the class <font
+ color="#336666">Square</font>:<br>
+<br>
+<tt>--<br>
+-- constructor for Square<br>
+--<br>
+function Square.Create(side)<br>
+&nbsp; -- first make a copy of the master object<br>
+&nbsp; local self = Utils.ShallowCopy(Square)<br>
+&nbsp; -- then set fields<br>
+&nbsp; self.side = side<br>
+&nbsp; return self <br>
+end<br>
+</tt><br>
+(note that <font color="#336666">side </font>is the received
+argument, while <font color="#336666">self.side</font> it the object
+data field)<br>
+<br>
+The first line makes <b>a copy</b> of the master object table (i.e. of
+the 'class' fields) into the local variable conventionally named <font
+ color="#336666">self</font>; it is a good idea to keep this name to
+avoid confusion, as it will be used by Lua syntax in methods (as we'll
+see shortly).<br>
+<br>
+The <font color="#336666">Utils.ShallowCopy()</font> function, defined
+in <font color="#993399">utils.lua</font>, if called with a single
+argument (a table) just makes a <b>first-level copy</b> of the argument
+and returns the copy. In this case the table is empty, so <font
+ color="#336666">Utils.ShallowCopy() </font>just returns a new empty
+table.<br>
+<br>
+The second line assigns a <b>value</b> to a data member (<font
+ color="#336666">self.side</font>) of the new object just instantiated (<font
+ color="#336666">self</font>), in fact creating the data member in this
+case, because it previous value was nil (i.e. non-existent).<br>
+The last line returns the newly-created object.<br>
+<a name="methods"></a><br>
+<h2>Defining methods</h2>
+A <b>function field</b> (method) could be defined and/or documented
+inside the 'class' (master object table) as shown in the notes at the
+end of this page, but I find it cleaner to define it separatedly,
+usually later in the same file:<br>
+<br>
+<tt>--<br>
+-- compute the area of a Square object<br>
+--<br>
+function Square:GetArea()<br>
+&nbsp; return self.side * self.side<br>
+end<br>
+</tt><br>
+The <b>colon</b> (:) instead of the dot (.) is a Lua shortcut for:<br>
+<br>
+<tt> function Square.GetArea(self)<br>
+</tt><br>
+That also implies that this function will probably be called with the
+colon syntax, and that a hidden <font color="#336666">self</font>
+argument will be passed first, referring to the object given in the
+function call. Here is an <b>example</b> of use:<br>
+<br>
+<tt>sq = Square.Create(5)<br>
+print("area:", sq:GetArea)<br>
+</tt><br>
+Inside a function field (method), the <font color="#006600">self</font>
+variable refers to the <b>object</b> used to call the method: <font
+ color="#006600">sq</font> in the above example.<br>
+<br>
+Unless 'getter' and 'setter' functions (e.g. <font color="#336666">GetSide()</font>,<font
+ color="#336666"> SetSide()</font>) are explicitely defined, the <b>data
+fields</b> of an object can be accessed from outside methods by use of
+the dot syntax:<br>
+<br>
+<tt>sq.side = 12<br>
+print("area:", sq:GetArea)<br>
+</tt><br>
+As always in Lua, barriers are <b>not enforced</b>: the programmer is
+responsible to keep code clean by avoiding messing with data members
+directly (the lack of automatic getters and setters is a limitation of
+this object system, although an helper function could probably be
+devised to create them - either directly or through a metamethod-based
+mechanism - but I like simple things).<br>
+<a name="initializers"></a><br>
+<h2>Initializers<br>
+</h2>
+To initialize a data field, just set its value in the <b>class</b>
+(master object) definition:<br>
+<br>
+<tt>--<br>
+-- class Square<br>
+--<br>
+Square = {<br>
+&nbsp; side = nil,<br>
+&nbsp; posx = 0,&nbsp; -- initialized data<br>
+&nbsp; posy = 0<br>
+}<br>
+</tt><br>
+Since these fields are <b>copied</b> to every new instance in the
+constructor <font color="#336666">Square.Create()</font>, they act as
+initializers.<br>
+<br>
+An initializer can also be used as <b>default value</b>, if none (or a
+special value, e.g. <font color="#336666">false</font>) is passed to
+the constructor:<br>
+<br>
+<tt>--<br>
+-- class Square<br>
+--<br>
+Square = {<br>
+&nbsp; side = 10&nbsp; -- default side length<br>
+}<br>
+</tt><br>
+<tt>--<br>
+-- constructor<br>
+--<br>
+function Square.Create(side)<br>
+&nbsp; local self = Utils.ShallowCopy(Square)<br>
+</tt><tt>&nbsp; -- use default if arg not given</tt><br>
+<tt> &nbsp; if side then self.side = side end<br>
+&nbsp; return self <br>
+end</tt><tt><br>
+</tt><br>
+(as seen before, <font color="#336666">side </font>is the received
+argument, while <font color="#336666">self.side</font> it the object
+data field)<br>
+<a name="static"></a><br>
+<h2>Static fields</h2>
+A data field in the class (master object) can be accessed independently
+from the existence of instantiated objects; it can be considered <b>common
+to all instances</b> ('static' in C++ or Java parlance). For example, we
+could use a list to to keep track of the objects created so far:<br>
+<br>
+<tt>--<br>
+-- class Square<br>
+--<br>
+Square = {<br>
+&nbsp; -- instance data<br>
+&nbsp; side = nil,<br>
+&nbsp; --<br>
+&nbsp; -- static data<br>
+&nbsp; created = {} -- list of created Squares<br>
+}<br>
+</tt><br>
+The <font color="#336666">created</font> field can be accessed <b>from
+anywhere</b> as <font color="#336666">Square.created</font>, for
+example every time a <font color="#336666">Square</font> is created from
+the constructor:<br>
+<br>
+<tt>--<br>
+-- constructor<br>
+--<br>
+function Square.Create(side)<br>
+&nbsp; local self = Utils.ShallowCopy(Square)<br>
+&nbsp; self.side = side<br>
+</tt><tt> &nbsp; -- remove copy of static data from this object<br>
+&nbsp; self.created = nil<br>
+</tt><tt> &nbsp; -- add the new Square to the static list<br>
+&nbsp; table.insert(Square.created, self)<br>
+&nbsp; return self <br>
+end</tt><tt><br>
+</tt><br>
+In the above example, <font color="#336666">Square.created</font> is a <b>static</b>
+field (common to all objects), while <font color="#336666">self.created</font>
+is its <b>copy</b> made by <font color="#336666">Utils.ShallowCopy()</font>
+along with all other fields. This copy is just a waste of space, so in
+the constructor it is convenient to delete it from the newly-created
+instance, by setting it to <font color="#336666">nil</font>.<br>
+<br>
+(note: the above code will keep every created <font color="#336666">Square</font>
+alive through the reference from <font color="#336666">Square.created</font>;
+this could lead to a memory leak if objects are often created and
+destroyed, unless appropriate steps are taken; this is a common issue
+with garbage-collected languages and has nothing to do with objects)<br>
+<br>
+<b>Static functions</b> (methods) are defined using a dot instead of the
+colon, i.e. they do not receive the hidden argument <font
+ color="#336666">self</font>:<br>
+<br>
+<tt>--<br>
+-- clear list of created Squares<br>
+--<br>
+function Square.ResetCreated()<br>
+&nbsp; Square.created = {}<br>
+end<br>
+</tt><br>
+Static function are not called through an instance using colon syntax
+(as methods are), but they are called directly using the <b>dot syntax</b>:<br>
+<br>
+<tt>Square.ResetCreated()</tt><br>
+<a name="inherit"></a><br>
+<h2>Inheritance</h2>
+Lua being a dynamic language, in many cases there is no need to define
+subclasses: single objects (instances) can be <b>modified</b> at will by
+adding, removing or changing data fields or function fields, to build
+personalized objects.<br>
+<br>
+A more structured approach can also be used, similar to the one
+employed by many popular languages: <b>derive</b> a subclass from a
+superclass (or from more than one, in case of multiple inheritance). It
+can be done like this:<br>
+<br>
+<tt>--<br>
+-- class ColoredSquare (derived from Square)<br>
+--<br>
+ColoredSquare = {<br>
+&nbsp; color = BLACK<br>
+}<br>
+</tt><br>
+The class definition is similar to that of a stand-alone class like <font
+ color="#006600">Square</font>; the actual derivation takes place in
+the <b>constructor</b>:<br>
+<br>
+<tt>function ColoredSquare.Create(side)<br>
+&nbsp; -- first create the superclass<br>
+&nbsp; local self = Square.Create(side)<br>
+&nbsp; -- then add subclass fields<br>
+&nbsp; self = Utils.ShallowCopy(ColoredSquare, self)<br>
+</tt><tt>&nbsp; -- rest of initialization here<br>
+</tt><tt>&nbsp; return self <br>
+end<br>
+</tt><br>
+The first line creates a <font color="#006600">self</font> object of
+class <font color="#006600">Square</font>; the second line uses the <font
+ color="#336666">Utils.ShallowCopy()</font> helper function to <b>add</b>
+a copy of the <font color="#006600">ColoredSquare</font> class fields to
+the new <font color="#006600">self</font> object.<br>
+After this operation, the object will contain <b>both</b> the fields
+from the superclass <font color="#006600">Square</font> and those from
+the derived class <font color="#006600">ColoredSquare</font>:<br>
+<br>
+<tt>csq = ColorSquare.Create(5)<br>
+csq.side = 10<br>
+csq.color = RED<br>
+</tt><br>
+<font color="#336666">Utils.ShallowCopy()</font> adds fields <b>in-place</b>,
+i.e. modifies the table passed as second argument (<font color="#006600">self</font>
+in the above example) instead of making a copy, for the sake of
+efficiency in the creation of complex objects.<br>
+If a field from the derived class has <b>the same name</b> as a field
+from the superclass, the field is replaced: the derived class has
+precedence, as would be expected.<br>
+<br>
+<b>Function fields</b> (methods) work exactly the same way as data
+fields: no special operation is required to make inheritance work. The
+above note about field substitution implies that in this situation:<br>
+<br>
+<tt>function Square:Draw()<br>
+&nbsp; -- draw a square<br>
+end<br>
+</tt><br>
+<tt>function ColoredSquare:Draw()<br>
+&nbsp; -- draw a colored square<br>
+end<br>
+</tt><br>
+the <b>appropriate</b> (most specific) method will be called:<br>
+<br>
+<tt>sq = Square.Create(5)<br>
+csq = ColoredSquare.Create(5)<br>
+sq:Draw()&nbsp; -- calls Square.Draw()<br>
+csq:Draw() -- calls ColoredSquare.Draw()<br>
+</tt><br>
+<b>Multiple inheritance</b> is possible, by copying fields from more
+than one superclass:<br>
+<br>
+<tt>--<br>
+--</tt><tt> ColoredFilledSquare (derived from FilledShape and Square)</tt><br>
+<tt>--<br>
+function ColoredFilledSquare.Create(side)<br>
+&nbsp; -- create the first superclass<br>
+&nbsp; local self = Square.Create(side)<br>
+&nbsp; -- add fields from the second superclass<br>
+</tt><tt> &nbsp; self = Utils.ShallowCopy(FilledShape.Create(), self)<br>
+</tt><tt>&nbsp; -- add subclass fields<br>
+&nbsp; self = Utils.ShallowCopy(ColoredSquare, self)<br>
+&nbsp; -- rest of initialization here<br>
+&nbsp; return self <br>
+end<br>
+</tt><br>
+Note that the constructors for <b>all</b> the superclasses must be
+called to have valid objects to derive from: it would not be a good idea
+to simply use <font color="#006600">FilledShape</font> instead of <font
+ color="#006600">FilledShape.Create()</font>, because constructor
+initialization would be skipped.<br>
+Name conflict <b>precedence</b> in multiple inheritance is simple: the
+last one used in the constructor wins.<br>
+<a name="super"></a><br>
+<h2>Access to superclasses</h2>
+It is sometime useful to access a function field (method) that has been <b>replaced</b>,
+in the subclass, by a different function of the same name. For example,
+if <font color="#006600">ColoredSquare</font> is derived from <font
+ color="#006600">Square</font>, the following code calls <font
+ color="#006600">ColoredSquare:Draw()</font>:<br>
+<br>
+<tt>csq = ColoredSquare.Create(5)<br>
+csq:Draw() -- calls ColoredSquare.Draw()<br>
+</tt><br>
+The original <font color="#006600">Square:Draw()</font> of the
+superclass has been <b>replaced</b> in the constructor of the derived
+class (<font color="#006600">ColoredSquare.Create()</font>) and is
+therefore not direcly available. However, it could be called in this way:<br>
+<br>
+<tt>csq = ColoredSquare.Create(5)<br>
+Square.Draw(csq)</tt><tt> -- calls Square.Draw()</tt><br>
+<br>
+There are two differences here from an usual method call: the use of
+the <b>dot syntax</b> and the explicit passing of the <b>object</b> <font
+ color="#006600">csq</font> to act upon (it will become <font
+ color="#006600">self</font> inside the <font color="#006600">Draw()</font>
+function).<br>
+This is nothing new: in fact, normal method calls like:<br>
+<br>
+<tt>csq:Draw()</tt><br>
+<br>
+are <b>translated</b> by Lua to:<br>
+<br>
+<tt>csq.Draw(csq)<br>
+</tt><br>
+where <font color="#006600">Draw</font> is a field of the table <font
+ color="#006600">csq,</font> and <font color="#006600">csq</font> is
+also passed as first argument&nbsp; to <font color="#006600">Draw()</font>.
+So, calling a function from a superclass just means calling a function
+that is <b>not</b> a field of the object.<br>
+<a name="notes"></a><br>
+<h2>Notes</h2>
+<ul>
+  <li>This object system has <b>limitations</b>. Apart from the lack
+of getters/setters mentioned above, the main drawback is that every
+object carries with it [references to] all its methods; this makes this
+approach inefficient for small objects to be produced in large numbers.<br>
+    <font color="#006600"><br>
+    </font></li>
+  <li><font color="#006600">Utils.ShallowCopy()</font> only copies <b>first-level
+data</b>; this must be remembered when instances have complex data
+structures. The required behaviour should be implemented in the
+constructor.<br>
+    <br>
+  </li>
+  <li>Instance creation for derived classes could be <b>automated</b>
+by using a <font color="#006600">super</font> field referring to the
+superclass (or to a list of superclasses) and writing a helper function,
+say <font color="#006600">MakeInstance()</font>. I prefer things to
+stay simple.<br>
+    <br>
+  </li>
+  <li>For the benefit of C++ users, in Lua a <b>colon</b> (:) means
+member access requiring an object (dot or arrow in C++), while a <b>dot</b>
+(.) means static access (double colon in C++).<br>
+    <br>
+  </li>
+  <li>An object is valid as soon as it is created during the
+constructor, so its methods can be called even <b>within</b> the
+constructor itself.<br>
+    <br>
+  </li>
+  <li> It is interesting to note that <b>function fields</b> (methods)
+are treated exactly as initializers; defining a function as:<br>
+    <br>
+    <tt>function Square:GetArea()<br>
+&nbsp; return self.side * self.side<br>
+end</tt><br>
+    <br>
+is equivalent to defining it inside the class declaration, with an
+explicit <font color="#006600">self</font> parameter:<br>
+    <br>
+    <tt>Square = {<br>
+&nbsp; side = nil,<br>
+&nbsp; --<br>
+    </tt><tt>&nbsp; GetArea = function(self)<br>
+&nbsp;&nbsp;&nbsp; return self.side * self.side<br>
+&nbsp; end</tt><br>
+    <tt>}</tt><br>
+    <br>
+  </li>
+  <li>Last but not least, the use of objects should not (in my opinion)
+be taken as a religion; many problems can be efficiently solved by <b>combining</b>
+object-based and non-object-based techniques. This is applicable to many
+languages, but it is especially true in the case of Lua.<br>
+  </li>
+</ul>
+<br>
+<a href="#top">Back to start of page</a><br>
+<br>
+<br>
+</body>
+</html>

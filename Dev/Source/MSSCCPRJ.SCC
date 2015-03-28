@@ -1,0 +1,21 @@
+SCC = This is a source code control file
+
+[GameCode2.sln]
+SCC_Aux_Path = "P4SCC#SHUTTLE:1112##mrmike##Shuttle"
+SCC_Project_Name = Perforce Project
+
+[DX9Common.vcproj]
+SCC_Aux_Path = "P4SCC#SHUTTLE:1112##mrmike##Shuttle"
+SCC_Project_Name = Perforce Project
+
+[GameCode2.vcproj]
+SCC_Aux_Path = "P4SCC#SHUTTLE:1112##mrmike##Shuttle"
+SCC_Project_Name = Perforce Project
+
+[GameCode2_2005.sln]
+SCC_Aux_Path = "P4SCC#SHUTTLE:1112##mrmike##Shuttle"
+SCC_Project_Name = Perforce Project
+
+[Lang.vcproj]
+SCC_Aux_Path = "P4SCC#SHUTTLE:1112##mrmike##Shuttle"
+SCC_Project_Name = Perforce Project

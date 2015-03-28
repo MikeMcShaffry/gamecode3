@@ -1,0 +1,9 @@
+# usage gcc_header someheader.h outputfilename
+
+gcc -E -x c -I`wx-config --cxxflags` \
+-I/home/john/wx/wxCVS_25/wxWindows/lib/wx/include/gtkd-2.5 \
+$1 -o $2
+
+# note: -I/home/john really shouldn't be needed but it says that
+# it can't find wx/setup.h without it
+# that include is copied DIRECTLY from --cxxflags output!

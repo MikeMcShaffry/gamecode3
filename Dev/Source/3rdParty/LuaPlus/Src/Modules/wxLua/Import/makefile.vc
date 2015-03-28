@@ -1,0 +1,12 @@
+!include wrappers.lst
+
+all: wxLuaWrapWin.hpp
+
+wxLuaWrapGTK.hpp: wxLuaWrap.lua wxLuaWrap.i Overrides.hpp $(WRAPPERS)
+	..\lua50\lua -e"isWindows=1" wxLuaWrap.lua
+
+clean:
+    -del wxLuaWrapWin.hpp
+
+rebuild: clean wxLuaWrapWin.hpp
+

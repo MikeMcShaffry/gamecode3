@@ -1,0 +1,31 @@
+WRAPPERS = \
+appframe.i \
+clipdrag.i \
+config.i \
+controls.i \
+data.i \
+datetime.i \
+defsutil.i \
+dialogs.i \
+event.i \
+file.i \
+fl.i \
+gdi.i \
+geometry.i \
+grid.i \
+help.i \
+html.i \
+image.i \
+mdi.i \
+menutool.i \
+plot.i \
+print.i \
+regex.i \
+sizer.i \
+socket.i \
+stc.i \
+wave.i \
+windows.i \
+wxlua.i \
+wxLuaWrap.i \
+xml.i

@@ -1,0 +1,34 @@
+This is a sample program of an embedded wxLua interpreter. This means that
+wxLua is run in the same thread as the main program.
+
+------------------------------------------------------------------------------
+Building
+------------------------------------------------------------------------------
+
+MSW - Visual C
+   Use the project file wxLua_wx2(x).dsw one dir up to select what you want 
+   to compile. Make sure that you at least have compiled "lua" and
+   "wxLuaLib_wx2(x)" first since this links to them. Or if you've already 
+   compilied those just use "Embedded_wx2(x).dsp" to build this.
+
+GTK - gcc
+   Run make, be sure that wx-config is in your path.
+   
+------------------------------------------------------------------------------
+Files
+------------------------------------------------------------------------------
+Embedded.cpp     -- sample "IDE" type editor
+luasetup.h       -- the setup file for the embedded version
+Makefile         -- gmake for gcc to compile the Embedded program (unix)
+Makefile_import  -- (make -f Makefile_import) to create wxLuaWrap.cpp
+wxLuaEditor.cpp  -- contains an editor, shell, console class
+wxLuaEditor.h
+/wxstedit dir    -- wxStyledTextControl editor with added features
+
+As you trim down the size of wxLua, by editing luasetup.h to remove unneeded
+classes, you may get warning about missing base classes. You'll want to put
+them back. Unfortunately other problems can arise if you remove a class that
+references in a member function of another class. If you really don't want that
+class, then just rem "//" out the function that uses the missing class in the
+appropriate .i file in ../Import.
+

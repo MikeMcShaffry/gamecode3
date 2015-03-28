@@ -1,0 +1,3 @@
+WXWIN=c:\wxWidgets-2.6.1
+PATH=$(SolutionDir)\..\..\..\Bin;$(PATH)
+
